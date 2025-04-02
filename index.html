@@ -15,12 +15,12 @@
     </div>
     <div class="game-container">
         <div class="shapes-container">
-            <div class="shape green" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
             <div class="shape green" draggable="true"></div>
             <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
             <div class="shape orange" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
         </div>
         <div class="pattern-container">
             <div class="dropzone" data-color="green"></div>
@@ -31,10 +31,11 @@
             <div class="dropzone" data-color="orange"></div>
         </div>
     </div>
-    <div id="successMessage" class="message">Tebrikler! Örüntüyü doğru tamamladınız!</div>
+    <div id="successMessage" class="message">Tebrikler! Örüntüdeki şekilleri doğru sırada yerleştirdiniz!</div>
     <div id="errorMessage" class="message error">Yanlış yerleştirme! Lütfen doğru alanı seçin.</div>
-    <button id="resetButton" class="hidden">Baştan Başla</button>
     <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+    <button id="resetButton" style="display:none;">Oyunu Yeniden Başlat</button>
+
     <script src="script.js"></script>
 </body>
 </html>
