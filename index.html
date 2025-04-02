@@ -9,7 +9,12 @@
 <body>
     <h1>Örüntü Oyunu</h1>
     <div class="game-container">
-        <!-- Soldaki şekiller -->
+        <div class="start-options">
+            <button id="greenFirst">Yeşil ile Başla</button>
+            <button id="orangeFirst">Turuncu ile Başla</button>
+        </div>
+
+        <!-- Sol taraftaki daireler -->
         <div class="shapes-container">
             <div class="shape orange" draggable="true"></div>
             <div class="shape green" draggable="true"></div>
@@ -19,4 +24,23 @@
             <div class="shape green" draggable="true"></div>
         </div>
 
-        <!-- Ortad
+        <!-- Ortada kesik çizgilerle belirtilen alanlar (yerleştirilecek alanlar) -->
+        <div class="pattern-container">
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+        </div>
+    </div>
+
+    <!-- Kazanma mesajı -->
+    <p class="message" id="successMessage">Tebrikler! Örüntüdeki daireleri doğru sırada yerleştirdiniz.</p>
+
+    <!-- Ses dosyası (yanlış yerleştirme için) -->
+    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
