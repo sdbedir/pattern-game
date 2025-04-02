@@ -24,19 +24,20 @@ h1 {
     display: flex;
     justify-content: center;
     gap: 30px;
+    margin-top: 60px;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
+    align-items: center;
+    position: relative;
 }
 
 .pattern-container {
     display: flex;
     gap: 20px;
-    justify-content: center;
 }
 
 .shape {
@@ -45,6 +46,8 @@ h1 {
     border-radius: 50%;
     cursor: grab;
     transition: all 0.3s ease-in-out;
+    position: relative;
+    z-index: 10;
 }
 
 .shape.green {
@@ -64,6 +67,8 @@ h1 {
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s;
+    position: relative;
+    z-index: 5;
 }
 
 .dropzone.filled {
