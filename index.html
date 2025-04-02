@@ -3,37 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Eksik Örüntüyü Tamamlama Oyunu</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Örüntü Oyunu</h1>
-    <div id="chooseMessage" class="message">Başlangıç rengi seçin: Turuncu veya Yeşil</div>
-    <div class="buttons">
-        <button onclick="selectColor('orange')">Turuncu ile Başla</button>
-        <button onclick="selectColor('green')">Yeşil ile Başla</button>
+    <h1>Eksik Örüntüyü Tamamlama Oyunu</h1>
+    <p>Örüntüyü tamamlamak için bir renkle başlayın ve sırayla sürükleyip bırakın!</p>
+
+    <div class="button-container">
+        <button id="startGreen">Yeşil ile Başla</button>
+        <button id="startOrange">Turuncu ile Başla</button>
     </div>
-    <div class="game-container">
-        <div class="shapes-container">
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
+
+    <div class="container">
+        <div class="pattern">
+            <div class="dropzone" data-index="0"></div>
+            <div class="dropzone" data-index="1"></div>
+            <div class="dropzone" data-index="2"></div>
+            <div class="dropzone" data-index="3"></div>
+            <div class="dropzone" data-index="4"></div>
+            <div class="dropzone" data-index="5"></div>
         </div>
-        <div class="pattern-container">
-            <div class="dropzone" data-color="green"></div>
-            <div class="dropzone" data-color="orange"></div>
-            <div class="dropzone" data-color="green"></div>
-            <div class="dropzone" data-color="orange"></div>
-            <div class="dropzone" data-color="green"></div>
-            <div class="dropzone" data-color="orange"></div>
+
+        <div class="draggable-container">
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
         </div>
     </div>
-    <div id="successMessage" class="message">Tebrikler! Örüntüdeki şekilleri doğru sırada yerleştirdiniz!</div>
-    <div id="errorMessage" class="message error">Yanlış yerleştirme! Lütfen doğru alanı seçin.</div>
-    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+
+    <audio id="errorSound" src="error.mp3"></audio>
 
     <script src="script.js"></script>
 </body>
