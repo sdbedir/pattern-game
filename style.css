@@ -1,4 +1,3 @@
-/* Genel stil ayarları */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -13,7 +12,6 @@ body {
     overflow: hidden;
 }
 
-/* Başlık */
 h1 {
     position: absolute;
     top: 10px;
@@ -22,99 +20,58 @@ h1 {
     color: #E91E63;
 }
 
-/* Oyun Alanı */
 .game-container {
     display: flex;
     justify-content: center;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-    width: 100%;
+    gap: 50px;
 }
 
-/* Şekillerin Konumu */
 .shapes-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    flex: 1;
-    margin-right: 20px;
 }
 
-/* Desen Alanı */
 .pattern-container {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    flex: 2;
 }
 
-/* Şekillerin Stilini Belirleme */
 .shape {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     background-color: orange;
     border-radius: 50%;
-    cursor: grab;
-    touch-action: none; /* Dokunmatik ekran için gerekli */
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .shape.green {
     background-color: green;
 }
 
-/* Dropzone Alanları */
 .dropzone {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border: 2px dashed #ccc;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px;
+    transition: background-color 0.3s ease;
 }
 
-/* Başarı Mesajı */
+.dropzone.filled {
+    background-color: #ccc;
+}
+
 .message {
     display: none;
     color: #4CAF50;
     font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
-}
-
-/* Animasyon */
-.bounce {
-    animation: bounce 0.5s infinite alternate;
-}
-
-@keyframes bounce {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-20px);
-    }
-}
-
-/* Mobil Uyumluluk İçin */
-@media (max-width: 768px) {
-    .shapes-container {
-        flex-direction: row;
-        gap: 10px;
-    }
-
-    .pattern-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .dropzone {
-        width: 80px;
-        height: 80px;
-    }
 }
