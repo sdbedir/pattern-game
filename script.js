@@ -4,6 +4,7 @@ const successMessage = document.getElementById('successMessage');
 const errorSound = document.getElementById('errorSound');
 let matchedShapes = 0;
 let patternStartedWithGreen = false;  // İlk şeklin rengini kontrol eden değişken
+let currentPattern = [];  // Seçilen örüntü sırası
 
 // Sürükleme olayları
 shapes.forEach(shape => {
@@ -17,6 +18,27 @@ dropzones.forEach(dropzone => {
     dropzone.addEventListener('dragleave', dragLeave);
     dropzone.addEventListener('drop', drop);
 });
+
+// Başlangıç rengi seçme (yeşil veya turuncu)
+document.querySelectorAll('.shapes-container .shape').forEach(shape => {
+    shape.addEventListener('click', (e) => {
+        const firstShapeColor = e.target.classList.contains('green') ? 'green' : 'orange';
+        if (currentPattern.length === 0) {
+            patternStartedWithGreen = firstShapeColor === 'green';  // Başlangıç rengini belirle
+            setupPattern(firstShapeColor);
+        }
+    });
+});
+
+// Seçilen renge göre örüntü sırasını oluşturma
+function setupPattern(startColor) {
+    currentPattern = [];
+    let color = startColor;
+    for (let i = 0; i < dropzones.length; i++) {
+        currentPattern.push(color);
+        color = (color === 'green') ? 'orange' : 'green';  // Alternatif renk
+    }
+}
 
 // Sürükleme başlangıcı
 function dragStart(e) {
@@ -51,7 +73,7 @@ function drop(e) {
     const color = e.dataTransfer.getData('text/plain');
     const targetColor = e.target.getAttribute('data-color');
 
-    if (color === targetColor && !e.target.classList.contains('filled')) {
+    if (color === currentPattern[matchedShapes] && !e.target.classList.contains('filled')) {
         e.target.classList.add('filled');
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
