@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Tamamlama Oyunu</title>
+    <title>Eksik Örüntüyü Tamamlama Oyunu</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Örüntü Tamamlama Oyunu</h1>
-    <p>Daireleri sürükleyerek eksik örüntüyü tamamla!</p>
+    <h1>Eksik Örüntüyü Tamamlama Oyunu</h1>
+    <p>Örüntüyü tamamlamak için bir renkle başlayın ve sırayla sürükleyip bırakın!</p>
 
-    <div class="game-container">
+    <div class="button-container">
+        <button id="startGreen">Yeşil ile Başla</button>
+        <button id="startOrange">Turuncu ile Başla</button>
+    </div>
+
+    <div class="container">
         <div class="pattern">
-            <div class="dropzone" data-order="0"></div>
-            <div class="dropzone" data-order="1"></div>
-            <div class="dropzone" data-order="2"></div>
-            <div class="dropzone" data-order="3"></div>
-            <div class="dropzone" data-order="4"></div>
-            <div class="dropzone" data-order="5"></div>
+            <div class="dropzone" data-index="0"></div>
+            <div class="dropzone" data-index="1"></div>
+            <div class="dropzone" data-index="2"></div>
+            <div class="dropzone" data-index="3"></div>
+            <div class="dropzone" data-index="4"></div>
+            <div class="dropzone" data-index="5"></div>
         </div>
 
         <div class="draggable-container">
             <div class="draggable green" draggable="true" data-color="green"></div>
             <div class="draggable orange" draggable="true" data-color="orange"></div>
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
         </div>
     </div>
 
-    <button id="restart">Baştan Başla</button>
-    <p id="message"></p>
+    <audio id="errorSound" src="error.mp3"></audio>
 
     <script src="script.js"></script>
 </body>
