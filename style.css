@@ -13,11 +13,14 @@ body {
 }
 
 h1 {
-    position: absolute;
-    top: 10px;
     width: 100%;
     text-align: center;
     color: #E91E63;
+}
+
+/* Başlangıç seçenekleri */
+.start-options {
+    margin-bottom: 30px;
 }
 
 /* Oyun container */
