@@ -34,6 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         shapes.forEach(shape => {
             shape.style.display = "block";
+            shape.style.position = "relative";
         });
     }
 
@@ -41,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("dragend", dragEnd);
+        shape.addEventListener("touchstart", touchStart, { passive: false });
+        shape.addEventListener("touchmove", touchMove, { passive: false });
+        shape.addEventListener("touchend", touchEnd);
     });
 
     dropzones.forEach(dropzone => {
@@ -60,14 +64,39 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    function touchStart(e) {
+        draggedElement = e.target;
+        draggedElement.style.opacity = "0.5";
+    }
+
+    function touchMove(e) {
+        e.preventDefault();
+        const touch = e.touches[0];
+        draggedElement.style.position = "fixed";
+        draggedElement.style.left = `${touch.clientX - 40}px`;
+        draggedElement.style.top = `${touch.clientY - 40}px`;
+    }
+
+    function touchEnd(e) {
+        const touch = e.changedTouches[0];
+        let dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
+
+        if (dropTarget && dropTarget.classList.contains("dropzone")) {
+            drop({ preventDefault: () => {} }, dropTarget);
+        }
+
+        draggedElement.style.opacity = "1";
+        draggedElement.style.position = "static";
+    }
+
     function dragOver(e) {
         e.preventDefault();
     }
 
-    function drop(e) {
+    function drop(e, target = null) {
         e.preventDefault();
         const draggedColor = draggedElement.classList.contains("green") ? "green" : "orange";
-        const targetDropzone = e.target;
+        const targetDropzone = target || e.target;
 
         if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
             const expectedColor = patternOrder[patternIndex];
