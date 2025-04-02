@@ -1,68 +1,10 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Örüntü Oyunu</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        h1 {
-            color: #E91E63;
-        }
-        .game-container {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        .shapes-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .pattern-container {
-            display: flex;
-            gap: 10px;
-        }
-        .shape {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            cursor: grab;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .green { background-color: green; }
-        .orange { background-color: orange; }
-        .dropzone {
-            width: 80px;
-            height: 80px;
-            border: 2px dashed #333;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .hidden { display: none; }
-        .message {
-            display: none;
-            font-size: 20px;
-            font-weight: bold;
-            color: green;
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Örüntü Oyunu</h1>
@@ -76,85 +18,16 @@
             <div class="shape orange" draggable="true" data-color="orange"></div>
         </div>
         <div class="pattern-container">
-            <div class="dropzone" data-index="0"></div>
-            <div class="dropzone" data-index="1"></div>
-            <div class="dropzone" data-index="2"></div>
-            <div class="dropzone" data-index="3"></div>
-            <div class="dropzone" data-index="4"></div>
-            <div class="dropzone" data-index="5"></div>
+            <div class="dropzone" data-expected=""></div>
+            <div class="dropzone" data-expected=""></div>
+            <div class="dropzone" data-expected=""></div>
+            <div class="dropzone" data-expected=""></div>
+            <div class="dropzone" data-expected=""></div>
+            <div class="dropzone" data-expected=""></div>
         </div>
     </div>
-    <p class="message" id="successMessage">Tebrikler! Örüntüyü doğru tamamladınız!</p>
-    <audio id="errorSound" src="https://www.myinstants.com/media/sounds/error.mp3"></audio>
-    
-    <script>
-        let pattern = [];
-        const shapes = document.querySelectorAll('.shape');
-        const dropzones = document.querySelectorAll('.dropzone');
-        const successMessage = document.getElementById('successMessage');
-        const errorSound = document.getElementById('errorSound');
-
-        shapes.forEach(shape => {
-            shape.addEventListener('touchstart', touchStart);
-            shape.addEventListener('touchmove', touchMove);
-            shape.addEventListener('touchend', touchEnd);
-            shape.addEventListener('dragstart', dragStart);
-        });
-
-        dropzones.forEach(zone => {
-            zone.addEventListener('dragover', dragOver);
-            zone.addEventListener('drop', drop);
-        });
-
-        let draggedElement = null;
-
-        function dragStart(e) {
-            draggedElement = e.target;
-            e.dataTransfer.setData('text', draggedElement.dataset.color);
-            setTimeout(() => draggedElement.style.display = 'none', 0);
-        }
-
-        function dragOver(e) {
-            e.preventDefault();
-        }
-
-        function drop(e) {
-            e.preventDefault();
-            let color = e.dataTransfer.getData('text');
-            let index = e.target.dataset.index;
-            
-            if (pattern.length === 0 || pattern[pattern.length - 1] !== color) {
-                e.target.style.backgroundColor = color;
-                pattern.push(color);
-                if (pattern.length === 6) {
-                    successMessage.style.display = 'block';
-                }
-            } else {
-                errorSound.play();
-                draggedElement.style.display = 'flex';
-            }
-        }
-
-        function touchStart(e) {
-            draggedElement = e.target;
-        }
-
-        function touchMove(e) {
-            let touchLocation = e.targetTouches[0];
-            draggedElement.style.position = "absolute";
-            draggedElement.style.left = touchLocation.pageX - 40 + "px";
-            draggedElement.style.top = touchLocation.pageY - 40 + "px";
-        }
-
-        function touchEnd(e) {
-            let droppedOn = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
-            if (droppedOn.classList.contains('dropzone')) {
-                drop({ preventDefault: () => {}, target: droppedOn, dataTransfer: { getData: () => draggedElement.dataset.color } });
-            } else {
-                errorSound.play();
-                draggedElement.style.position = "static";
-            }
-        }
-    </script>
+    <p class="message" id="successMessage">Tebrikler! Örüntüyü doğru tamamladınız.</p>
+    <audio id="errorSound" src="error.mp3"></audio>
+    <script src="script.js"></script>
 </body>
 </html>
