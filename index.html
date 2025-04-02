@@ -1,29 +1,29 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Örüntü Oyunu</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Örüntü Oyunu</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>Örüntü Oyunu</h1>
-  <div id="chooseMessage" class="message">Başlangıç rengi seçin: Turuncu veya Yeşil</div>
-  <div class="buttons">
-      <button onclick="selectColor('orange')">Turuncu ile Başla</button>
-      <button onclick="selectColor('green')">Yeşil ile Başla</button>
-  </div>
-  <div class="game-container">
-    <div class="shapes-container">
-      <!-- Sürüklenebilir daireler buraya eklenecek -->
+    <h1>Örüntü Oyunu</h1>
+    <div id="chooseMessage" class="message">Başlangıç rengi seçin: Turuncu veya Yeşil</div>
+    <div class="buttons">
+        <button onclick="selectColor('orange')">Turuncu ile Başla</button>
+        <button onclick="selectColor('green')">Yeşil ile Başla</button>
     </div>
-    <div class="pattern-container">
-      <!-- Bırakma alanları (dropzone) buraya oluşturulacak -->
+
+    <div class="game-container">
+        <div class="shapes-container"></div>
+        <div class="pattern-container"></div>
     </div>
-  </div>
-  <div id="successMessage" class="message">Tebrikler! Örüntüdeki şekilleri doğru sırada yerleştirdiniz!</div>
-  <div id="errorMessage" class="message error">Yanlış yerleştirme! Lütfen doğru alanı seçin.</div>
-  <audio id="errorSound" src="error.mp3" preload="auto"></audio>
-  <script src="script.js"></script>
+
+    <div id="successMessage" class="message">Tebrikler! Tüm şekilleri doğru yerleştirdiniz!</div>
+    <div id="errorMessage" class="message error">Yanlış yerleştirme! Lütfen doğru alanı seçin.</div>
+    
+    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+
+    <script src="script.js"></script>
 </body>
 </html>
