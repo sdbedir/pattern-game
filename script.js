@@ -1,81 +1,122 @@
-const draggables = document.querySelectorAll('.draggable');
-const dropzones = document.querySelectorAll('.dropzone');
+const shapes = document.querySelectorAll('.shapes-container .shape');
+const dropzones = document.querySelectorAll('.pattern-container .dropzone');
+const successMessage = document.getElementById('successMessage');
+const errorMessage = document.getElementById('errorMessage');
+const chooseMessage = document.getElementById('chooseMessage');
 const errorSound = document.getElementById('errorSound');
-const startGreenButton = document.getElementById('startGreen');
-const startOrangeButton = document.getElementById('startOrange');
-
+let matchedShapes = 0;
 let pattern = [];
-let firstColorChosen = null;
-let placedItems = new Array(6).fill(null);
+let currentShape = null;
+let gameStarted = false;
+let firstColor = ''; // 'green' or 'orange'
 
-// Oyuncu bir renk seçmeden oyun başlamasın
-function resetGame() {
-    pattern = [];
-    firstColorChosen = null;
-    placedItems.fill(null);
-    dropzones.forEach(dropzone => {
-        dropzone.style.backgroundColor = "#f9f9f9";
-        dropzone.classList.remove("correct", "incorrect");
-    });
+// Başlangıç rengi seçme işlemi
+chooseMessage.style.display = 'block';
+
+shapes.forEach(shape => {
+    shape.addEventListener('dragstart', dragStart);
+    shape.addEventListener('dragend', dragEnd);
+    shape.addEventListener('touchstart', dragStart);
+    shape.addEventListener('touchend', dragEnd);
+});
+
+dropzones.forEach(dropzone => {
+    dropzone.addEventListener('dragover', dragOver);
+    dropzone.addEventListener('dragenter', dragEnter);
+    dropzone.addEventListener('dragleave', dragLeave);
+    dropzone.addEventListener('drop', drop);
+    dropzone.addEventListener('touchmove', dragOver);
+    dropzone.addEventListener('touchstart', dragEnter);
+    dropzone.addEventListener('touchend', dragLeave);
+});
+
+// Başlangıç rengi seçme işlemi
+function selectColor(color) {
+    firstColor = color;
+    gameStarted = true;
+    chooseMessage.style.display = 'none'; // Başlangıç rengi mesajını gizle
+    resetGame();
 }
 
-// Oyuncu bir renkle başlasın ve örüntü o sırayla devam etsin
-function determinePattern(startColor) {
-    pattern = [];
-    for (let i = 0; i < 6; i++) {
-        pattern.push(i % 2 === 0 ? startColor : startColor === "green" ? "orange" : "green");
+function resetGame() {
+    matchedShapes = 0;
+    dropzones.forEach(zone => {
+        zone.classList.remove('filled');
+        zone.style.backgroundColor = 'transparent';
+    });
+    shapes.forEach(shape => {
+        shape.style.display = 'block';
+        shape.style.cursor = 'grab'; // Sürüklenebilir
+    });
+    initializeShapesOrder();
+}
+
+function initializeShapesOrder() {
+    const shapeOrder = firstColor === 'orange' ? ['orange', 'green', 'orange', 'green', 'orange', 'green'] : ['green', 'orange', 'green', 'orange', 'green', 'orange'];
+
+    for (let i = 0; i < shapes.length; i++) {
+        shapes[i].classList.remove('green', 'orange');
+        shapes[i].classList.add(shapeOrder[i]);
     }
 }
 
-startGreenButton.addEventListener("click", () => {
-    resetGame();
-    firstColorChosen = "green";
-    determinePattern(firstColorChosen);
-});
+// Drag and drop işlemleri
+function dragStart(e) {
+    if (!gameStarted) return;
+    currentShape = e.target;
+    e.dataTransfer.setData('text/plain', currentShape.classList.contains('green') ? 'green' : 'orange');
+    setTimeout(() => currentShape.classList.add('hidden'), 0);
+}
 
-startOrangeButton.addEventListener("click", () => {
-    resetGame();
-    firstColorChosen = "orange";
-    determinePattern(firstColorChosen);
-});
+function dragEnd(e) {
+    currentShape.classList.remove('hidden');
+    currentShape = null;
+}
 
-draggables.forEach(draggable => {
-    draggable.addEventListener('dragstart', (e) => {
-        if (!firstColorChosen) {
-            alert("Önce bir renkle başlamalısınız!");
-            e.preventDefault();
-            return;
-        }
-        e.dataTransfer.setData('color', e.target.getAttribute('data-color'));
-    });
-});
+function dragOver(e) {
+    e.preventDefault();
+}
 
-dropzones.forEach((dropzone, index) => {
-    dropzone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-    });
+function dragEnter(e) {
+    e.preventDefault();
+    e.target.classList.add('hover');
+}
 
-    dropzone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        const color = e.dataTransfer.getData('color');
+function dragLeave(e) {
+    e.target.classList.remove('hover');
+}
 
-        if (placedItems[index]) return; // Eğer alan doluysa işlem yapma
+function drop(e) {
+    e.preventDefault();
+    const color = e.dataTransfer.getData('text/plain');
+    const targetColor = e.target.getAttribute('data-color');
 
-        if (color === pattern[index]) {
-            dropzone.style.backgroundColor = color;
-            dropzone.classList.add('correct');
-            placedItems[index] = color;
-            checkCompletion();
-        } else {
-            dropzone.classList.add('incorrect');
-            errorSound.play();
-            setTimeout(() => dropzone.classList.remove('incorrect'), 1000);
-        }
-    });
-});
+    if (color === targetColor && !e.target.classList.contains('filled')) {
+        e.target.classList.add('filled');
+        e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
+        matchedShapes++;
+        checkWin();
+        e.target.appendChild(currentShape);
+        currentShape.style.display = 'none'; // Şekli gizle
+    } else {
+        playErrorSound();
+        resetShape(currentShape);
+    }
+}
 
-function checkCompletion() {
-    if (placedItems.every((color, i) => color === pattern[i])) {
-        setTimeout(() => alert("Tebrikler! Örüntüyü doğru yerleştirdiniz."), 500);
+function playErrorSound() {
+    errorSound.play();
+}
+
+function resetShape(shape) {
+    setTimeout(() => {
+        shape.style.display = 'block'; // Şekli tekrar göster
+        shape.style.position = 'initial';
+    }, 1000); // 1 saniye sonra geri gelmesi için
+}
+
+function checkWin() {
+    if (matchedShapes === dropzones.length) {
+        successMessage.style.display = 'block';
     }
 }
