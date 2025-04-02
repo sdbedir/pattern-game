@@ -1,9 +1,11 @@
 const shapes = document.querySelectorAll('.shapes-container .shape');
 const dropzones = document.querySelectorAll('.pattern-container .dropzone');
 const successMessage = document.getElementById('successMessage');
+const errorSound = document.getElementById('errorSound');
 let matchedShapes = 0;
-let currentPattern = []; // Oyuncunun seçtiği sıralama
+let patternStartedWithGreen = false;  // Bu değişken ilk şeklin rengini kontrol eder
 
+// Sürükleme olayları
 shapes.forEach(shape => {
     shape.addEventListener('dragstart', dragStart);
     shape.addEventListener('dragend', dragEnd);
@@ -16,55 +18,67 @@ dropzones.forEach(dropzone => {
     dropzone.addEventListener('drop', drop);
 });
 
+// Sürükleme başlangıcı
 function dragStart(e) {
     e.dataTransfer.setData('text/plain', e.target.classList.contains('green') ? 'green' : 'orange');
     setTimeout(() => e.target.classList.add('hidden'), 0);
 }
 
+// Sürükleme bitişi
 function dragEnd(e) {
     e.target.classList.remove('hidden');
 }
 
+// Alan üzerine sürükleme
 function dragOver(e) {
     e.preventDefault();
 }
 
+// Alan üzerine girme
 function dragEnter(e) {
     e.preventDefault();
     e.target.classList.add('hover');
 }
 
+// Alan dışına çıkma
 function dragLeave(e) {
     e.target.classList.remove('hover');
 }
 
+// Alan üzerine bırakma
 function drop(e) {
     e.preventDefault();
     const color = e.dataTransfer.getData('text/plain');
     const targetColor = e.target.getAttribute('data-color');
 
     if (color === targetColor && !e.target.classList.contains('filled')) {
-        // Şekil doğru yere yerleştirildiğinde
         e.target.classList.add('filled');
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
-        currentPattern.push(color);
-        
-        // Şekil sol taraftan kaybolacak
-        const shape = document.querySelector(`.shape.${color}`);
-        shape.style.visibility = 'hidden';
-
         checkWin();
     } else {
-        // Eğer yanlış yerleştirildiyse şekil geri dönecek
-        const shape = document.querySelector(`.shape.${color}`);
-        shape.style.visibility = 'visible';
+        // Yanlış yerleştirme durumunda
+        errorSound.play(); // Sesli uyarı
+        setTimeout(() => {
+            e.target.style.backgroundColor = ''; // Yanlış yerleştirilen şekil eski yerine döner
+            e.target.classList.remove('filled');
+        }, 500);
     }
 }
 
+// Kazanma kontrolü
 function checkWin() {
     if (matchedShapes === dropzones.length) {
         successMessage.style.display = 'block';
         dropzones.forEach(zone => zone.classList.add('bounce'));
     }
 }
+
+// İlk şekli seçme
+shapes.forEach(shape => {
+    shape.addEventListener('click', () => {
+        if (!patternStartedWithGreen && shape.classList.contains('green')) {
+            patternStartedWithGreen = true;
+        }
+    });
+});
