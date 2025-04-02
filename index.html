@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Örüntü Tamamlama Oyunu</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Örüntü Oyunu</h1>
-    <div id="chooseMessage" class="message">Başlangıç rengi seçin: Turuncu veya Yeşil</div>
-    <div class="buttons">
-        <button onclick="selectColor('orange')">Turuncu ile Başla</button>
-        <button onclick="selectColor('green')">Yeşil ile Başla</button>
-    </div>
+    <h1>Örüntü Tamamlama Oyunu</h1>
+    <p>Daireleri sürükleyip doğru örüntüyü oluştur!</p>
 
     <div class="game-container">
-        <div class="shapes-container"></div>
-        <div class="pattern-container"></div>
+        <div class="pattern">
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+        </div>
+        <div class="draggable-container">
+            <div class="draggable green" draggable="true"></div>
+            <div class="draggable orange" draggable="true"></div>
+            <div class="draggable green" draggable="true"></div>
+            <div class="draggable orange" draggable="true"></div>
+            <div class="draggable green" draggable="true"></div>
+            <div class="draggable orange" draggable="true"></div>
+        </div>
     </div>
 
-    <div id="successMessage" class="message">Tebrikler! Tüm şekilleri doğru yerleştirdiniz!</div>
-    <div id="errorMessage" class="message error">Yanlış yerleştirme! Lütfen doğru alanı seçin.</div>
-    
-    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+    <p id="message"></p>
 
     <script src="script.js"></script>
 </body>
