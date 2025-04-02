@@ -1,129 +1,80 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f9f9f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    gap: 50px;
-    height: 100vh;
-    overflow: hidden;
-}
-
-h1 {
-    position: absolute;
-    top: 10px;
-    width: 100%;
     text-align: center;
-    color: #E91E63;
-    font-size: 24px;
+    margin: 20px;
 }
 
-.game-container {
+.container {
     display: flex;
-    gap: 30px;
     justify-content: center;
-    flex-wrap: wrap;
-}
-
-.shapes-container {
-    display: flex;
+    align-items: center;
     flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    order: 1; /* Şekiller solda olacak */
 }
 
-.pattern-container {
+.pattern {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
     justify-content: center;
-}
-
-.shape {
-    width: 80px;
-    height: 80px;
-    background-color: orange;
-    border-radius: 50%;
-    cursor: grab;
-    transition: all 0.3s ease-in-out;
-}
-
-.shape.green {
-    background-color: green;
+    margin: 20px 0;
 }
 
 .dropzone {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
+    margin: 5px;
     border: 2px dashed #ccc;
+    background-color: #f9f9f9;
     border-radius: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     transition: background-color 0.3s;
-    position: relative;
 }
 
-.message {
-    display: none;
-    color: #4CAF50;
-    font-size: 24px;
-    font-weight: bold;
+.draggable-container {
+    display: flex;
+    justify-content: center;
     margin-top: 20px;
 }
 
-.error {
-    color: #F44336;
+.draggable {
+    width: 60px;
+    height: 60px;
+    margin: 5px;
+    border-radius: 50%;
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
 }
 
-.bounce {
-    animation: bounce 0.5s infinite alternate;
+.draggable:active {
+    transform: scale(1.1);
 }
 
-@keyframes bounce {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-20px);
-    }
+.green {
+    background-color: green;
 }
 
-@media (max-width: 768px) {
-    .shape {
-        width: 60px;
-        height: 60px;
-    }
-
-    .dropzone {
-        width: 80px;
-        height: 80px;
-    }
+.orange {
+    background-color: orange;
 }
 
-@media (max-width: 480px) {
-    h1 {
-        font-size: 18px;
-    }
+.correct {
+    border: 2px solid green;
+}
 
-    .game-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
+.incorrect {
+    border: 2px solid red;
+}
 
-    .shape {
-        width: 50px;
-        height: 50px;
-    }
+.button-container {
+    margin-bottom: 20px;
+}
 
-    .dropzone {
-        width: 60px;
-        height: 60px;
-    }
+button {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
 }
