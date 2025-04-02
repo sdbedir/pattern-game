@@ -75,14 +75,4 @@ h1 {
 }
 
 .bounce {
-    animation: bounce 0.5s infinite alternate;
-}
-
-@keyframes bounce {
-    from {
-        transform: translateY(0);
-    }
-    to {
-        transform: translateY(-10px);
-    }
-}
+    animation: bounce 0.5s
