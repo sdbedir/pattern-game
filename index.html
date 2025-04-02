@@ -9,7 +9,7 @@
 <body>
     <h1>Örüntü Oyunu</h1>
     <div class="game-container">
-        <!-- Sol tarafta sırasıyla 6 şekil -->
+        <!-- Sol tarafta sırasıyla 6 şekil (yeşil ve turuncu daireler) -->
         <div class="shapes-container">
             <div class="shape orange" draggable="true"></div>
             <div class="shape green" draggable="true"></div>
@@ -19,7 +19,7 @@
             <div class="shape green" draggable="true"></div>
         </div>
 
-        <!-- Ortada sıralı alanlar -->
+        <!-- Ortada sıralı alanlar (kesik çizgilerle belirtilmiş alanlar) -->
         <div class="pattern-container">
             <div class="dropzone" data-color="green"></div>
             <div class="dropzone" data-color="orange"></div>
@@ -30,9 +30,10 @@
         </div>
     </div>
 
-    <p class="message" id="successMessage">Tebrikler! Şekli başarıyla tamamladınız.</p>
+    <!-- Kazanma mesajı -->
+    <p class="message" id="successMessage">Tebrikler! Örüntüdeki şekilleri doğru sıra ile yerleştirdiniz.</p>
 
-    <!-- Ses dosyası -->
+    <!-- Ses dosyası (yanlış yerleştirme için) -->
     <audio id="errorSound" src="error.mp3" preload="auto"></audio>
 
     <script src="script.js"></script>
