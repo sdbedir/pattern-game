@@ -29,7 +29,8 @@ function resetGame() {
   successMessage.style.display = 'none';
   errorMessage.style.display = 'none';
   
-  // Bırakma alanları (dropzone) sırası; soldan sağa belirli örüntü
+  // Dropzone sıralaması: Oyuncunun seçimine göre örüntü
+  // Her durumda dropzone'lar soldan başlayacak şekilde oluşturuluyor.
   if (firstColor === 'orange') {
     patternOrder = ['orange', 'green', 'orange', 'green', 'orange', 'green'];
   } else {
@@ -117,13 +118,34 @@ function dragLeave(e) {
   e.target.classList.remove('hover');
 }
 
+// Yardımcı fonksiyon: En solda, henüz doldurulmamış dropzone'u bulur.
+function getLeftmostUnfilledDropzone() {
+  const dropzones = document.querySelectorAll('.pattern-container .dropzone');
+  for (let zone of dropzones) {
+    if (!zone.classList.contains('filled')) {
+      return zone;
+    }
+  }
+  return null;
+}
+
 function drop(e) {
   e.preventDefault();
   e.target.classList.remove('hover');
   const draggedColor = e.dataTransfer.getData('text/plain');
   const targetColor = e.target.getAttribute('data-color');
   
-  if (draggedColor === targetColor && !e.target.classList.contains('filled')) {
+  // Sadece en soldaki henüz doldurulmamış dropzone kabul edilsin
+  const leftmostZone = getLeftmostUnfilledDropzone();
+  if (e.target !== leftmostZone) {
+    playErrorSound();
+    errorMessage.style.display = 'block';
+    setTimeout(() => errorMessage.style.display = 'none', 1000);
+    currentShape.style.visibility = 'visible';
+    return;
+  }
+  
+  if (draggedColor === targetColor) {
     e.target.classList.add('filled');
     e.target.appendChild(currentShape);
     currentShape.style.visibility = 'visible';
@@ -134,6 +156,7 @@ function drop(e) {
     playErrorSound();
     errorMessage.style.display = 'block';
     setTimeout(() => errorMessage.style.display = 'none', 1000);
+    currentShape.style.visibility = 'visible';
   }
 }
 
@@ -163,9 +186,10 @@ function touchMove(e) {
 function touchEnd(e) {
   if (!currentShape) return;
   const touch = e.changedTouches[0];
-  // Dropzone'ı belirle
   const dropzone = document.elementFromPoint(touch.clientX, touch.clientY);
-  if (dropzone && dropzone.classList.contains('dropzone') && !dropzone.classList.contains('filled')) {
+  // Sadece geçerli dropzone ve en soldaki boş dropzone kontrol edilsin
+  const leftmostZone = getLeftmostUnfilledDropzone();
+  if (dropzone && dropzone.classList.contains('dropzone') && dropzone === leftmostZone) {
     const shapeColor = currentShape.classList.contains('green') ? 'green' : 'orange';
     const targetColor = dropzone.getAttribute('data-color');
     if (shapeColor === targetColor) {
@@ -182,7 +206,7 @@ function touchEnd(e) {
       currentShape.style.position = 'static';
     }
   } else {
-    // Geçerli dropzone bulunamadıysa, orijinal konuma dön
+    // Geçerli dropzone bulunamadıysa veya sıradaki değilse, orijinal konuma dön
     currentShape.style.position = 'static';
   }
   currentShape = null;
