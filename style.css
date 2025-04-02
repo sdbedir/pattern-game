@@ -1,3 +1,4 @@
+/* Sayfa stilizasyonu */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -9,7 +10,6 @@ body {
     flex-direction: column;
     gap: 50px;
     height: 100vh;
-    overflow: hidden;
 }
 
 h1 {
@@ -18,57 +18,60 @@ h1 {
     width: 100%;
     text-align: center;
     color: #E91E63;
-    font-size: 24px;
 }
 
+/* Oyun container */
 .game-container {
     display: flex;
-    gap: 30px;
+    gap: 50px;
     justify-content: center;
-    flex-wrap: wrap;
+    align-items: center;
 }
 
+/* Sol taraftaki daireler */
 .shapes-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 20px;
-    order: 1; /* Şekiller solda olacak */
+    width: 200px;
 }
 
-.pattern-container {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
+/* Daireler */
 .shape {
     width: 80px;
     height: 80px;
-    background-color: orange;
     border-radius: 50%;
     cursor: grab;
-    transition: all 0.3s ease-in-out;
+    user-select: none;
+}
+
+.shape.orange {
+    background-color: orange;
 }
 
 .shape.green {
     background-color: green;
 }
 
+/* Ortadaki drop alanları */
+.pattern-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
 .dropzone {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border: 2px dashed #ccc;
     border-radius: 50%;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s;
-    position: relative;
 }
 
+/* Kazanma mesajı */
 .message {
     display: none;
     color: #4CAF50;
@@ -77,8 +80,8 @@ h1 {
     margin-top: 20px;
 }
 
-.error {
-    color: #F44336;
+.hidden {
+    visibility: hidden;
 }
 
 .bounce {
@@ -90,40 +93,6 @@ h1 {
         transform: translateY(0);
     }
     to {
-        transform: translateY(-20px);
-    }
-}
-
-@media (max-width: 768px) {
-    .shape {
-        width: 60px;
-        height: 60px;
-    }
-
-    .dropzone {
-        width: 80px;
-        height: 80px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 18px;
-    }
-
-    .game-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .shape {
-        width: 50px;
-        height: 50px;
-    }
-
-    .dropzone {
-        width: 60px;
-        height: 60px;
+        transform: translateY(-10px);
     }
 }
