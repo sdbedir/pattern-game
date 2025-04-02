@@ -4,56 +4,24 @@ const successMessage = document.getElementById('successMessage');
 let matchedShapes = 0;
 
 shapes.forEach(shape => {
-    shape.addEventListener('touchstart', dragStart);
-    shape.addEventListener('touchend', dragEnd);
-    shape.addEventListener('touchmove', dragMove);
-    shape.addEventListener('mousedown', dragStart);
-    shape.addEventListener('mouseup', dragEnd);
-    shape.addEventListener('mousemove', dragMove);
+    shape.addEventListener('dragstart', dragStart);
+    shape.addEventListener('dragend', dragEnd);
 });
 
 dropzones.forEach(dropzone => {
-    dropzone.addEventListener('touchenter', dragEnter);
-    dropzone.addEventListener('touchleave', dragLeave);
-    dropzone.addEventListener('touchmove', dragOver);
     dropzone.addEventListener('dragover', dragOver);
     dropzone.addEventListener('dragenter', dragEnter);
     dropzone.addEventListener('dragleave', dragLeave);
     dropzone.addEventListener('drop', drop);
 });
 
-let activeShape = null;
-
 function dragStart(e) {
-    e.preventDefault();
-    const target = e.target;
-    activeShape = target;
-    target.style.zIndex = 1000;
-    target.classList.add('dragging');
-}
-
-function dragMove(e) {
-    if (!activeShape) return;
-    const touch = e.touches ? e.touches[0] : e; // Dokunmatik cihazlar için
-    const x = touch.clientX;
-    const y = touch.clientY;
-
-    activeShape.style.left = `${x - activeShape.offsetWidth / 2}px`;
-    activeShape.style.top = `${y - activeShape.offsetHeight / 2}px`;
+    e.dataTransfer.setData('text/plain', e.target.classList.contains('green') ? 'green' : 'orange');
+    e.target.style.opacity = '0.5';
 }
 
 function dragEnd(e) {
-    if (!activeShape) return;
-    const target = document.elementFromPoint(e.clientX, e.clientY);
-    if (target && target.classList.contains('dropzone') && target.getAttribute('data-color') === activeShape.classList.contains('green') ? 'green' : 'orange') {
-        target.style.backgroundColor = activeShape.classList.contains('green') ? 'green' : 'orange';
-        target.classList.add('filled');
-        matchedShapes++;
-        checkWin();
-    }
-
-    activeShape.classList.remove('dragging');
-    activeShape = null;
+    e.target.style.opacity = '1';
 }
 
 function dragOver(e) {
@@ -62,20 +30,21 @@ function dragOver(e) {
 
 function dragEnter(e) {
     e.preventDefault();
+    e.target.classList.add('hover');
 }
 
 function dragLeave(e) {
-    e.preventDefault();
+    e.target.classList.remove('hover');
 }
 
 function drop(e) {
     e.preventDefault();
+    const color = e.dataTransfer.getData('text/plain');
     const targetColor = e.target.getAttribute('data-color');
-    const draggedColor = activeShape.classList.contains('green') ? 'green' : 'orange';
 
-    if (targetColor === draggedColor && !e.target.classList.contains('filled')) {
+    if (color === targetColor && !e.target.classList.contains('filled')) {
         e.target.classList.add('filled');
-        e.target.style.backgroundColor = draggedColor === 'green' ? 'green' : 'orange';
+        e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
         checkWin();
     }
