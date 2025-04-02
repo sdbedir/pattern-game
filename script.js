@@ -2,8 +2,8 @@ const shapes = document.querySelectorAll('.shapes-container .shape');
 const dropzones = document.querySelectorAll('.pattern-container .dropzone');
 const successMessage = document.getElementById('successMessage');
 let matchedShapes = 0;
-
-let currentShape = null; // For tracking the dragged shape
+let pattern = [];
+let currentShape = null;
 
 shapes.forEach(shape => {
     shape.addEventListener('dragstart', dragStart);
@@ -36,7 +36,6 @@ function dragEnd(e) {
     currentShape = null; // Reset the current shape after drag ends
 }
 
-// Touch events
 function touchStart(e) {
     e.preventDefault();
     currentShape = e.target;
@@ -61,7 +60,6 @@ function touchMove(e) {
     currentShape.style.top = `${touch.pageY - currentShape.offsetHeight / 2}px`;
 }
 
-// Dropzone Handling (Mobile)
 function touchEnter(e) {
     e.preventDefault();
     e.target.classList.add('hover');
@@ -95,6 +93,7 @@ function checkDrop(e) {
                 dropzone.style.backgroundColor = color;
                 matchedShapes++;
                 checkWin();
+                currentShape.style.display = 'none'; // Hide the shape after placement
             }
         }
     });
@@ -123,6 +122,8 @@ function drop(e) {
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
         checkWin();
+        e.target.appendChild(currentShape); // Move the shape to the dropzone
+        currentShape.style.display = 'none'; // Hide the shape after placement
     }
 }
 
