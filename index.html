@@ -1,28 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drag and Drop Game</title>
+    <title>Örüntü Oyunu</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Shape Match Game</h1>
+    <h1>Örüntü Oyunu</h1>
     <div class="game-container">
         <div class="shapes-container">
-            <div class="shape" draggable="true"></div>
+            <!-- Şekiller -->
+            <div class="shape orange" draggable="true"></div>
             <div class="shape green" draggable="true"></div>
-            <div class="shape" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
             <div class="shape green" draggable="true"></div>
         </div>
         <div class="pattern-container">
+            <!-- Dönüşüm Alanları -->
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
             <div class="dropzone" data-color="green"></div>
             <div class="dropzone" data-color="orange"></div>
             <div class="dropzone" data-color="green"></div>
             <div class="dropzone" data-color="orange"></div>
         </div>
     </div>
-    <div id="successMessage" class="message">Congratulations! You matched all shapes!</div>
+    <div id="successMessage" class="message">Tebrikler! Şekilleri başarıyla tamamladınız!</div>
 
     <script src="script.js"></script>
 </body>
