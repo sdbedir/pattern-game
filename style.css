@@ -8,6 +8,7 @@ body {
     align-items: center;
     flex-direction: column;
     height: 100vh;
+    overflow: hidden;
 }
 
 h1 {
@@ -19,17 +20,14 @@ h1 {
     display: flex;
     gap: 30px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-}
-
-.pattern-container {
-    display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 15px;
 }
 
 .shape {
@@ -37,7 +35,7 @@ h1 {
     height: 80px;
     border-radius: 50%;
     cursor: grab;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s;
 }
 
 .shape.green {
@@ -65,16 +63,15 @@ h1 {
 
 .message {
     display: none;
-    color: #4CAF50;
     font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
 }
 
-#resetButton {
+.error {
+    color: red;
+}
+
+.hidden {
     display: none;
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    cursor: pointer;
 }
