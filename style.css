@@ -65,7 +65,6 @@ h1 {
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s;
-    position: relative;
 }
 
 .message {
@@ -76,8 +75,8 @@ h1 {
     margin-top: 20px;
 }
 
-.error {
-    color: #F44336;
+.bounce {
+    animation: bounce 0.5s infinite alternate;
 }
 
 @keyframes bounce {
