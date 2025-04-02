@@ -44,12 +44,19 @@ function drop(e) {
     const targetColor = e.target.getAttribute('data-color');
 
     if (color === targetColor && !e.target.classList.contains('filled')) {
+        // Şekil doğru yere yerleştirildiğinde
         e.target.classList.add('filled');
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
         currentPattern.push(color);
+        
+        // Şekil sol taraftan kaybolacak
+        const shape = document.querySelector(`.shape.${color}`);
+        shape.style.visibility = 'hidden';
+
         checkWin();
     } else {
+        // Eğer yanlış yerleştirildiyse şekil geri dönecek
         const shape = document.querySelector(`.shape.${color}`);
         shape.style.visibility = 'visible';
     }
@@ -61,4 +68,3 @@ function checkWin() {
         dropzones.forEach(zone => zone.classList.add('bounce'));
     }
 }
-
