@@ -73,13 +73,3 @@ function checkWin() {
         dropzones.forEach(zone => zone.classList.add('bounce'));
     }
 }
-
-// İlk şekli seçme
-shapes.forEach(shape => {
-    shape.addEventListener('click', () => {
-        // Yeşil ya da turuncudan birini seçmeye karar veririz
-        if (!patternStartedWithGreen && shape.classList.contains('green')) {
-            patternStartedWithGreen = true;
-        }
-    });
-});
