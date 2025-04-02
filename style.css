@@ -1,3 +1,4 @@
+/* Sayfa stilizasyonu */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -19,6 +20,7 @@ h1 {
     color: #E91E63;
 }
 
+/* Oyun container */
 .game-container {
     display: flex;
     gap: 50px;
@@ -26,6 +28,7 @@ h1 {
     align-items: center;
 }
 
+/* Sol taraftaki daireler */
 .shapes-container {
     display: flex;
     flex-direction: column;
@@ -33,18 +36,23 @@ h1 {
     width: 200px;
 }
 
+/* Daireler */
 .shape {
     width: 80px;
     height: 80px;
-    background-color: orange;
     border-radius: 50%;
     cursor: grab;
+}
+
+.shape.orange {
+    background-color: orange;
 }
 
 .shape.green {
     background-color: green;
 }
 
+/* Ortadaki drop alanları */
 .pattern-container {
     display: flex;
     gap: 20px;
@@ -62,6 +70,7 @@ h1 {
     align-items: center;
 }
 
+/* Kazanma mesajı */
 .message {
     display: none;
     color: #4CAF50;
@@ -75,4 +84,14 @@ h1 {
 }
 
 .bounce {
-    animation: bounce 0.5s
+    animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-10px);
+    }
+}
