@@ -7,6 +7,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     let draggedElement = null;
     let matchedShapes = 0;
+    let patternIndex = 0;
+    let patternOrder = ["green", "orange", "green", "orange", "green", "orange"];
 
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
@@ -68,13 +70,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const targetDropzone = target || e.target;
 
         if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
-            const targetColor = targetDropzone.getAttribute("data-color");
+            const expectedColor = patternOrder[patternIndex];
 
-            if (draggedColor === targetColor) {
+            if (draggedColor === expectedColor) {
                 targetDropzone.classList.add("filled");
                 targetDropzone.style.backgroundColor = draggedColor;
                 draggedElement.style.display = "none";
                 matchedShapes++;
+                patternIndex++;
 
                 if (matchedShapes === dropzones.length) {
                     successMessage.style.display = "block";
