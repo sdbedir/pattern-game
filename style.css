@@ -48,6 +48,7 @@ h1 {
 .pattern-container {
     display: flex;
     gap: 20px;
+    justify-content: center;
 }
 
 .dropzone {
