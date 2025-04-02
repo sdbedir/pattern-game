@@ -1,97 +1,61 @@
-* {
-  box-sizing: border-box;
-}
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 20px;
-  background-color: #f9f9f9;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f9f9f9;
 }
 
 h1 {
-  margin-bottom: 20px;
-  color: #E91E63;
-  font-size: 24px;
-}
-
-.buttons {
-  margin-bottom: 20px;
+    color: #E91E63;
 }
 
 .game-container {
-  display: flex;
-  gap: 50px;
-  width: 100%;
-  max-width: 800px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin-top: 20px;
 }
 
-/* Soldaki daireler */
 .shapes-container {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
 }
 
-/* Sağdaki bırakma alanları; soldan sağa sıralı */
 .pattern-container {
-  display: flex;
-  gap: 20px;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    gap: 15px;
 }
 
 .shape {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  cursor: grab;
-  transition: transform 0.3s;
-  background: none;
-}
-
-.shape.orange {
-  background-color: orange;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    cursor: grab;
 }
 
 .shape.green {
-  background-color: green;
+    background-color: green;
+}
+
+.shape.orange {
+    background-color: orange;
 }
 
 .dropzone {
-  width: 80px;
-  height: 80px;
-  border: 2px dashed #ccc;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-/* Doldurulduğunda dropzone'un arka planı temizlensin */
-.dropzone.filled {
-  border: none;
-  background-color: transparent;
+    width: 90px;
+    height: 90px;
+    border: 2px dashed gray;
+    border-radius: 50%;
 }
 
 .message {
-  display: none;
-  margin-top: 20px;
-  font-size: 20px;
-  font-weight: bold;
+    display: none;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 10px;
 }
 
-.message.error {
-  color: #F44336;
-}
-
-@media (max-width: 768px) {
-  .game-container {
-    flex-direction: column;
-    align-items: center;
-  }
+.error {
+    color: red;
 }
