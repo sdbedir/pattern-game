@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Örüntü Oyunu</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Örüntü Oyunu</h1>
+    <div class="game-container">
+        <!-- Shapes to Drag -->
+        <div class="shapes-container">
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+        </div>
+
+        <!-- Dropzone for Pattern -->
+        <div class="pattern-container">
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+        </div>
+    </div>
+    <p class="message" id="successMessage">Tebrikler! Şekli başarıyla tamamladınız.</p>
+    <script src="script.js"></script>
+</body>
+</html>

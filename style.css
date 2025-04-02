@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    height: 100vh;
+}
+
+h1 {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
+    color: #E91E63;
+}
+
+.game-container {
+    display: flex;
+    gap: 100px;
+}
+
+.shapes-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.pattern-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.shape {
+    width: 180px;
+    height: 180px;
+    background-color: orange;
+    border-radius: 50%;
+    cursor: grab;
+}
+
+.shape.green {
+    width: 200px;
+    height: 200px;
+    background-color: green;
+}
+
+.dropzone {
+    width: 200px;
+    height: 200px;
+    border: 2px dashed #ccc;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.message {
+    display: none;
+    color: #4CAF50;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.bounce {
+    animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-20px);
+    }
+}
