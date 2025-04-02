@@ -8,27 +8,25 @@
 </head>
 <body>
     <h1>Örüntü Tamamlama Oyunu</h1>
-    <p>Daireleri sürükleyip doğru örüntüyü oluştur!</p>
+    <p>Daireleri sürükleyerek eksik örüntüyü tamamla!</p>
 
     <div class="game-container">
         <div class="pattern">
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
+            <div class="dropzone" data-order="0"></div>
+            <div class="dropzone" data-order="1"></div>
+            <div class="dropzone" data-order="2"></div>
+            <div class="dropzone" data-order="3"></div>
+            <div class="dropzone" data-order="4"></div>
+            <div class="dropzone" data-order="5"></div>
         </div>
+
         <div class="draggable-container">
-            <div class="draggable green" draggable="true"></div>
-            <div class="draggable orange" draggable="true"></div>
-            <div class="draggable green" draggable="true"></div>
-            <div class="draggable orange" draggable="true"></div>
-            <div class="draggable green" draggable="true"></div>
-            <div class="draggable orange" draggable="true"></div>
+            <div class="draggable green" draggable="true" data-color="green"></div>
+            <div class="draggable orange" draggable="true" data-color="orange"></div>
         </div>
     </div>
 
+    <button id="restart">Baştan Başla</button>
     <p id="message"></p>
 
     <script src="script.js"></script>
