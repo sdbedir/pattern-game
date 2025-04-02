@@ -16,8 +16,6 @@ chooseMessage.style.display = 'block';
 shapes.forEach(shape => {
     shape.addEventListener('dragstart', dragStart);
     shape.addEventListener('dragend', dragEnd);
-    shape.addEventListener('touchstart', dragStart);
-    shape.addEventListener('touchend', dragEnd);
 });
 
 dropzones.forEach(dropzone => {
@@ -25,9 +23,6 @@ dropzones.forEach(dropzone => {
     dropzone.addEventListener('dragenter', dragEnter);
     dropzone.addEventListener('dragleave', dragLeave);
     dropzone.addEventListener('drop', drop);
-    dropzone.addEventListener('touchmove', dragOver);
-    dropzone.addEventListener('touchstart', dragEnter);
-    dropzone.addEventListener('touchend', dragLeave);
 });
 
 // Başlangıç rengi seçme işlemi
