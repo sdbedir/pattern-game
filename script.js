@@ -1,23 +1,17 @@
 const shapes = document.querySelectorAll('.shapes-container .shape');
 const dropzones = document.querySelectorAll('.pattern-container .dropzone');
 const successMessage = document.getElementById('successMessage');
-const errorMessage = document.getElementById('errorMessage');
-const chooseMessage = document.getElementById('chooseMessage');
-const errorSound = document.getElementById('errorSound');
 let matchedShapes = 0;
-let pattern = [];
-let currentShape = null;
-let gameStarted = false;
-let firstColor = ''; // 'green' or 'orange'
 
-// Başlangıç rengi seçme işlemi
-chooseMessage.style.display = 'block';
+let currentShape = null; // For tracking the dragged shape
 
 shapes.forEach(shape => {
     shape.addEventListener('dragstart', dragStart);
     shape.addEventListener('dragend', dragEnd);
-    shape.addEventListener('touchstart', dragStart);
-    shape.addEventListener('touchend', dragEnd);
+
+    shape.addEventListener('touchstart', touchStart);
+    shape.addEventListener('touchend', touchEnd);
+    shape.addEventListener('touchmove', touchMove);
 });
 
 dropzones.forEach(dropzone => {
@@ -25,52 +19,85 @@ dropzones.forEach(dropzone => {
     dropzone.addEventListener('dragenter', dragEnter);
     dropzone.addEventListener('dragleave', dragLeave);
     dropzone.addEventListener('drop', drop);
-    dropzone.addEventListener('touchmove', dragOver);
-    dropzone.addEventListener('touchstart', dragEnter);
-    dropzone.addEventListener('touchend', dragLeave);
+
+    dropzone.addEventListener('touchenter', touchEnter);
+    dropzone.addEventListener('touchleave', touchLeave);
+    dropzone.addEventListener('touchmove', touchMoveOnDropzone);
 });
 
-// Başlangıç rengi seçme işlemi
-function selectColor(color) {
-    firstColor = color;
-    gameStarted = true;
-    chooseMessage.style.display = 'none'; // Başlangıç rengi mesajını gizle
-    resetGame();
-}
-
-function resetGame() {
-    matchedShapes = 0;
-    dropzones.forEach(zone => {
-        zone.classList.remove('filled');
-        zone.style.backgroundColor = 'transparent';
-    });
-    shapes.forEach(shape => {
-        shape.style.display = 'block';
-        shape.style.cursor = 'grab'; // Sürüklenebilir
-    });
-    initializeShapesOrder();
-}
-
-function initializeShapesOrder() {
-    const shapeOrder = firstColor === 'orange' ? ['orange', 'green', 'orange', 'green', 'orange', 'green'] : ['green', 'orange', 'green', 'orange', 'green', 'orange'];
-
-    for (let i = 0; i < shapes.length; i++) {
-        shapes[i].classList.remove('green', 'orange');
-        shapes[i].classList.add(shapeOrder[i]);
-    }
-}
-
-// Drag and drop işlemleri
 function dragStart(e) {
-    if (!gameStarted) return;
-    currentShape = e.target;
-    e.dataTransfer.setData('text/plain', currentShape.classList.contains('green') ? 'green' : 'orange');
-    setTimeout(() => currentShape.classList.add('hidden'), 0);
+    currentShape = e.target; // Store the current dragged shape
+    e.dataTransfer.setData('text/plain', e.target.classList.contains('green') ? 'green' : 'orange');
+    setTimeout(() => e.target.classList.add('hidden'), 0);
 }
 
 function dragEnd(e) {
-    currentShape.classList.remove('hidden');
+    e.target.classList.remove('hidden');
+    currentShape = null; // Reset the current shape after drag ends
+}
+
+// Touch events
+function touchStart(e) {
+    e.preventDefault();
+    currentShape = e.target;
+    const touch = e.touches[0]; // Get the first touch point
+    currentShape.style.position = 'absolute';
+    document.body.appendChild(currentShape); // Append to body to make it draggable
+
+    currentShape.style.left = `${touch.pageX - currentShape.offsetWidth / 2}px`;
+    currentShape.style.top = `${touch.pageY - currentShape.offsetHeight / 2}px`;
+}
+
+function touchEnd(e) {
+    e.preventDefault();
+    checkDrop(e); // Check if the shape was dropped in the correct zone
     currentShape = null;
+}
+
+function touchMove(e) {
+    if (!currentShape) return;
+    const touch = e.touches[0];
+    currentShape.style.left = `${touch.pageX - currentShape.offsetWidth / 2}px`;
+    currentShape.style.top = `${touch.pageY - currentShape.offsetHeight / 2}px`;
+}
+
+// Dropzone Handling (Mobile)
+function touchEnter(e) {
+    e.preventDefault();
+    e.target.classList.add('hover');
+}
+
+function touchLeave(e) {
+    e.preventDefault();
+    e.target.classList.remove('hover');
+}
+
+function touchMoveOnDropzone(e) {
+    e.preventDefault();
+}
+
+function checkDrop(e) {
+    const color = currentShape.classList.contains('green') ? 'green' : 'orange';
+    dropzones.forEach(dropzone => {
+        const rect = dropzone.getBoundingClientRect();
+        const touch = e.changedTouches[0]; // Get the touch end point
+
+        if (
+            touch.pageX > rect.left &&
+            touch.pageX < rect.right &&
+            touch.pageY > rect.top &&
+            touch.pageY < rect.bottom
+        ) {
+            // If the shape is within dropzone
+            const targetColor = dropzone.getAttribute('data-color');
+            if (color === targetColor && !dropzone.classList.contains('filled')) {
+                dropzone.classList.add('filled');
+                dropzone.style.backgroundColor = color;
+                matchedShapes++;
+                checkWin();
+            }
+        }
+    });
 }
 
 function dragOver(e) {
@@ -96,27 +123,12 @@ function drop(e) {
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
         checkWin();
-        e.target.appendChild(currentShape);
-        currentShape.style.display = 'none'; // Şekli gizle
-    } else {
-        playErrorSound();
-        resetShape(currentShape);
     }
-}
-
-function playErrorSound() {
-    errorSound.play();
-}
-
-function resetShape(shape) {
-    setTimeout(() => {
-        shape.style.display = 'block'; // Şekli tekrar göster
-        shape.style.position = 'initial';
-    }, 1000); // 1 saniye sonra geri gelmesi için
 }
 
 function checkWin() {
     if (matchedShapes === dropzones.length) {
         successMessage.style.display = 'block';
+        dropzones.forEach(zone => zone.classList.add('bounce'));
     }
 }
