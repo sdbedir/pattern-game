@@ -1,53 +1,62 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f9f9f9;
     margin: 0;
     padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
 }
 
 h1 {
     color: #E91E63;
+    font-size: 24px;
 }
 
 .game-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     gap: 30px;
-    margin-top: 50px;
+    justify-content: center;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .pattern-container {
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
-.shape, .dropzone {
+.shape {
     width: 80px;
     height: 80px;
+    border-radius: 50%;
+    cursor: grab;
+    transition: all 0.3s ease-in-out;
+}
+
+.shape.green {
+    background-color: green;
+}
+
+.shape.orange {
+    background-color: orange;
+}
+
+.dropzone {
+    width: 80px;
+    height: 80px;
+    border: 2px dashed #ccc;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.shape {
-    cursor: grab;
-    transition: transform 0.2s;
-}
-
-.shape.green { background-color: green; }
-.shape.orange { background-color: orange; }
-
-.dropzone {
-    border: 2px dashed #ccc;
+    transition: background-color 0.3s;
 }
 
 .dropzone.filled {
@@ -56,20 +65,16 @@ h1 {
 
 .message {
     display: none;
-    font-size: 20px;
-    font-weight: bold;
     color: #4CAF50;
+    font-size: 24px;
+    font-weight: bold;
     margin-top: 20px;
 }
 
-button {
+#resetButton {
     display: none;
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 16px;
-    background-color: #E91E63;
-    color: white;
-    border: none;
+    font-size: 18px;
     cursor: pointer;
-    border-radius: 5px;
 }
