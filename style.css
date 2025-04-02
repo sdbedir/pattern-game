@@ -25,6 +25,9 @@ h1 {
     justify-content: center;
     gap: 30px;
     margin-top: 60px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: flex-start;
 }
 
 .shapes-container {
@@ -38,6 +41,8 @@ h1 {
 .pattern-container {
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
 }
 
 .shape {
