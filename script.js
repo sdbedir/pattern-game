@@ -2,6 +2,7 @@ const shapes = document.querySelectorAll('.shapes-container .shape');
 const dropzones = document.querySelectorAll('.pattern-container .dropzone');
 const successMessage = document.getElementById('successMessage');
 let matchedShapes = 0;
+let currentPattern = []; // Oyuncunun seçtiği sıralama
 
 shapes.forEach(shape => {
     shape.addEventListener('dragstart', dragStart);
@@ -46,11 +47,11 @@ function drop(e) {
         e.target.classList.add('filled');
         e.target.style.backgroundColor = color === 'green' ? 'green' : 'orange';
         matchedShapes++;
+        currentPattern.push(color);
         checkWin();
     } else {
-        // Eğer yanlış yere bırakılırsa daire tekrar yerine gider
         const shape = document.querySelector(`.shape.${color}`);
-        setTimeout(() => shape.style.visibility = 'visible', 200);
+        shape.style.visibility = 'visible';
     }
 }
 
@@ -60,3 +61,4 @@ function checkWin() {
         dropzones.forEach(zone => zone.classList.add('bounce'));
     }
 }
+
