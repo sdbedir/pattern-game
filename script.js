@@ -3,7 +3,7 @@ const dropzones = document.querySelectorAll('.pattern-container .dropzone');
 const successMessage = document.getElementById('successMessage');
 const errorSound = document.getElementById('errorSound');
 let matchedShapes = 0;
-let patternStartedWithGreen = false;  // Bu değişken ilk şeklin rengini kontrol eder
+let patternStartedWithGreen = false;  // İlk şeklin rengini kontrol eden değişken
 
 // Sürükleme olayları
 shapes.forEach(shape => {
@@ -77,6 +77,7 @@ function checkWin() {
 // İlk şekli seçme
 shapes.forEach(shape => {
     shape.addEventListener('click', () => {
+        // Yeşil ya da turuncudan birini seçmeye karar veririz
         if (!patternStartedWithGreen && shape.classList.contains('green')) {
             patternStartedWithGreen = true;
         }
