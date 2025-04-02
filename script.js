@@ -3,20 +3,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const dropzones = document.querySelectorAll(".dropzone");
     const successMessage = document.getElementById("successMessage");
     const resetButton = document.getElementById("resetButton");
-
+    const errorSound = document.getElementById("errorSound");
+    
     let draggedElement = null;
     let matchedShapes = 0;
 
-    shapes.forEach((shape) => {
+    shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("dragend", dragEnd);
-
         shape.addEventListener("touchstart", touchStart, { passive: false });
         shape.addEventListener("touchmove", touchMove, { passive: false });
         shape.addEventListener("touchend", touchEnd);
     });
 
-    dropzones.forEach((dropzone) => {
+    dropzones.forEach(dropzone => {
         dropzone.addEventListener("dragover", dragOver);
         dropzone.addEventListener("drop", drop);
     });
@@ -81,6 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     resetButton.style.display = "block";
                 }
             } else {
+                errorSound.play();
                 draggedElement.style.display = "block";
             }
         }
