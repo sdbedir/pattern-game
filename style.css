@@ -1,16 +1,48 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f4f4f4;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color: #E91E63;
+}
+
+.buttons {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    margin: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#startOrange {
+    background-color: orange;
+    color: white;
+}
+
+#startGreen {
+    background-color: green;
+    color: white;
 }
 
 .game-container {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: row;
-    gap: 30px;
-    margin-top: 50px;
+    gap: 50px;
+    margin-top: 20px;
 }
 
 .shapes-container {
@@ -24,19 +56,20 @@ body {
     height: 80px;
     border-radius: 50%;
     cursor: grab;
-}
-
-.shape.green {
-    background-color: green;
+    transition: transform 0.2s ease;
 }
 
 .shape.orange {
     background-color: orange;
 }
 
+.shape.green {
+    background-color: green;
+}
+
 .pattern-container {
     display: flex;
-    gap: 20px;
+    gap: 15px;
 }
 
 .dropzone {
@@ -44,10 +77,38 @@ body {
     height: 80px;
     border: 2px dashed #ccc;
     border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dropzone.filled {
+    border: none;
 }
 
 .message {
     display: none;
-    color: green;
-    font-size: 24px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+#successMessage {
+    color: #4CAF50;
+}
+
+#resetButton {
+    display: none;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #E91E63;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.hidden {
+    display: none;
 }
