@@ -1,19 +1,20 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #f9f9f9;
+    background-color: #f0f0f0;
 }
 
 h1 {
-    color: #E91E63;
+    margin-top: 20px;
 }
 
-.buttons {
-    margin-bottom: 20px;
+.controls {
+    margin: 20px;
 }
 
 button {
-    padding: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
     margin: 5px;
     cursor: pointer;
 }
@@ -22,63 +23,50 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 50px;
     margin-top: 20px;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    margin-right: 20px;
 }
 
 .shape {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
+    margin: 10px;
     cursor: grab;
-    transition: transform 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.shape.orange {
+.orange {
     background-color: orange;
 }
 
-.shape.green {
+.green {
     background-color: green;
 }
 
-.dropzone {
-    width: 80px;
-    height: 80px;
-    border: 2px dashed #ccc;
-    border-radius: 50%;
+.dropzone-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    gap: 20px;
+}
+
+.dropzone {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
     background-color: white;
-    transition: background-color 0.3s, transform 0.2s;
+    border: 2px dashed #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.dropzone.filled {
+.filled {
     border: none;
-}
-
-.message {
-    display: none;
-    color: #4CAF50;
-    font-size: 20px;
-    font-weight: bold;
-    margin-top: 20px;
-}
-
-#errorSound {
-    display: none;
-}
-
-#resetButton {
-    display: none;
-    margin-top: 20px;
-    padding: 10px;
-    cursor: pointer;
 }
