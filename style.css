@@ -2,13 +2,6 @@ body {
     font-family: Arial, sans-serif;
     text-align: center;
     background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
 }
 
 h1 {
@@ -16,30 +9,18 @@ h1 {
 }
 
 .buttons {
-    margin: 20px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 10px 20px;
+    padding: 10px;
     margin: 5px;
-    font-size: 18px;
     cursor: pointer;
-    border: none;
-    border-radius: 5px;
-}
-
-#startOrange {
-    background-color: orange;
-    color: white;
-}
-
-#startGreen {
-    background-color: green;
-    color: white;
 }
 
 .game-container {
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 50px;
     margin-top: 20px;
@@ -48,7 +29,7 @@ button {
 .shapes-container {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
 .shape {
@@ -56,7 +37,7 @@ button {
     height: 80px;
     border-radius: 50%;
     cursor: grab;
-    transition: transform 0.2s ease;
+    transition: transform 0.3s ease-in-out;
 }
 
 .shape.orange {
@@ -67,20 +48,16 @@ button {
     background-color: green;
 }
 
-.pattern-container {
-    display: flex;
-    gap: 15px;
-}
-
 .dropzone {
     width: 80px;
     height: 80px;
     border: 2px dashed #ccc;
     border-radius: 50%;
     display: flex;
-    align-items: center;
     justify-content: center;
-    transition: background-color 0.3s ease-in-out;
+    align-items: center;
+    background-color: white;
+    transition: background-color 0.3s, transform 0.2s;
 }
 
 .dropzone.filled {
@@ -89,26 +66,19 @@ button {
 
 .message {
     display: none;
+    color: #4CAF50;
     font-size: 20px;
+    font-weight: bold;
     margin-top: 20px;
 }
 
-#successMessage {
-    color: #4CAF50;
+#errorSound {
+    display: none;
 }
 
 #resetButton {
     display: none;
     margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #E91E63;
-    color: white;
-    border: none;
+    padding: 10px;
     cursor: pointer;
-    border-radius: 5px;
-}
-
-.hidden {
-    display: none;
 }
