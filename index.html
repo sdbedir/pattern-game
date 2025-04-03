@@ -4,29 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Örüntü Oyunu</h1>
-    <div class="game-container">
-        <div class="shapes-container">
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-        </div>
-        <div class="pattern-container">
-            <div class="dropzone" data-color="orange"></div>
-            <div class="dropzone" data-color="green"></div>
-            <div class="dropzone" data-color="orange"></div>
-            <div class="dropzone" data-color="green"></div>
-            <div class="dropzone" data-color="orange"></div>
-            <div class="dropzone" data-color="green"></div>
-        </div>
+    <div class="controls">
+        <button onclick="startGame('orange')">Turuncu ile Başla</button>
+        <button onclick="startGame('green')">Yeşil ile Başla</button>
     </div>
-    <p class="message" id="successMessage">Tebrikler! Örüntüyü başarıyla tamamladınız.</p>
+    
+    <div class="game-container">
+        <div class="shapes-container" id="shapesContainer"></div>
+        <div class="dropzone-container" id="dropzoneContainer"></div>
+    </div>
+    
+    <p id="message"></p>
+    <button id="restartButton" onclick="restartGame()" style="display:none;">Başa Dön</button>
+    
+    <audio id="errorSound" src="error.mp3" preload="auto"></audio>
+    
     <script src="script.js"></script>
 </body>
 </html>
