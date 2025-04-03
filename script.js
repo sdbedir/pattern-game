@@ -1,51 +1,38 @@
-const shapes = document.querySelectorAll('.shapes-container .shape');
-const dropzones = document.querySelectorAll('.pattern-container .dropzone');
-const successMessage = document.getElementById('successMessage');
-let placedShapes = [];
-
-shapes.forEach(shape => {
-    shape.addEventListener('dragstart', dragStart);
-    shape.addEventListener('dragend', dragEnd);
-});
-
-dropzones.forEach(dropzone => {
-    dropzone.addEventListener('dragover', dragOver);
-    dropzone.addEventListener('drop', drop);
-});
-
-function dragStart(e) {
-    e.dataTransfer.setData('color', e.target.classList.contains('green') ? 'green' : 'orange');
-    setTimeout(() => e.target.classList.add('hidden'), 0);
-}
-
-function dragEnd(e) {
-    e.target.classList.remove('hidden');
-}
-
-function dragOver(e) {
-    e.preventDefault();
-}
-
-function drop(e) {
-    e.preventDefault();
-    const color = e.dataTransfer.getData('color');
-    const targetColor = e.target.getAttribute('data-color');
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Örüntü Oyunu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Örüntü Oyunu</h1>
     
-    if (!e.target.classList.contains('filled')) {
-        e.target.classList.add('filled');
-        e.target.style.backgroundColor = color;
-        placedShapes.push(color);
-        checkWin();
-    }
-}
+    <div class="game-container">
+        <div class="shapes-container">
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+        </div>
 
-function checkWin() {
-    if (placedShapes.length === dropzones.length) {
-        const pattern1 = ['orange', 'green', 'orange', 'green', 'orange', 'green'];
-        const pattern2 = ['green', 'orange', 'green', 'orange', 'green', 'orange'];
-        
-        if (JSON.stringify(placedShapes) === JSON.stringify(pattern1) || JSON.stringify(placedShapes) === JSON.stringify(pattern2)) {
-            successMessage.style.display = 'block';
-        }
-    }
-}
+        <div class="pattern-container">
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+            <div class="dropzone"></div>
+        </div>
+    </div>
+
+    <p class="message" id="successMessage">Tebrikler! Örüntüyü başarıyla tamamladınız. 🎉</p>
+
+    <button id="resetButton">Yeniden Başlat</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
