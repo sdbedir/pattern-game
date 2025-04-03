@@ -1,38 +1,53 @@
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    text-align: center;
 }
 
 h1 {
+    margin-top: 20px;
     color: #E91E63;
+}
+
+.controls {
+    margin: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border: none;
+    background-color: #2196F3;
+    color: white;
+    border-radius: 5px;
 }
 
 .game-container {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    gap: 30px;
+    margin-top: 20px;
+    gap: 40px;
 }
 
 .shapes-container {
     display: flex;
+    flex-direction: column;
     gap: 15px;
-    margin-bottom: 20px;
 }
 
 .shape {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .orange {
@@ -43,38 +58,40 @@ h1 {
     background-color: green;
 }
 
-.pattern-container {
+.dropzone-container {
     display: flex;
-    gap: 15px;
+    gap: 20px;
 }
 
 .dropzone {
-    width: 80px;
-    height: 80px;
-    border: 2px dashed #555;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
+    background-color: white;
+    border: 2px dashed #aaa;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease-in-out;
 }
 
-.filled {
+.dropzone.filled {
     border: none;
 }
 
-.message {
-    display: none;
-    color: #4CAF50;
-    font-size: 24px;
+#message {
+    font-size: 18px;
     font-weight: bold;
+    color: #4CAF50;
     margin-top: 20px;
 }
 
-#resetButton {
+#restartButton {
+    display: none;
     margin-top: 20px;
     padding: 10px 20px;
-    font-size: 18px;
-    background-color: #E91E63;
+    font-size: 16px;
+    background-color: #F44336;
     color: white;
     border: none;
     border-radius: 5px;
