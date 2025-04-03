@@ -7,41 +7,31 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 50px;
     height: 100vh;
-    overflow: hidden;
+    text-align: center;
 }
 
 h1 {
-    position: absolute;
-    top: 10px;
-    width: 100%;
-    text-align: center;
     color: #E91E63;
-    font-size: 24px;
 }
 
 .game-container {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
-    order: 1; /* Şekiller solda olacak */
+    gap: 10px;
 }
 
 .pattern-container {
     display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
+    gap: 10px;
 }
 
 .shape {
@@ -50,7 +40,6 @@ h1 {
     background-color: orange;
     border-radius: 50%;
     cursor: grab;
-    transition: all 0.3s ease-in-out;
 }
 
 .shape.green {
@@ -58,15 +47,13 @@ h1 {
 }
 
 .dropzone {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border: 2px dashed #ccc;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: background-color 0.3s;
-    position: relative;
 }
 
 .message {
@@ -77,8 +64,8 @@ h1 {
     margin-top: 20px;
 }
 
-.error {
-    color: #F44336;
+.hidden {
+    visibility: hidden;
 }
 
 .bounce {
@@ -90,40 +77,6 @@ h1 {
         transform: translateY(0);
     }
     to {
-        transform: translateY(-20px);
-    }
-}
-
-@media (max-width: 768px) {
-    .shape {
-        width: 60px;
-        height: 60px;
-    }
-
-    .dropzone {
-        width: 80px;
-        height: 80px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 18px;
-    }
-
-    .game-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .shape {
-        width: 50px;
-        height: 50px;
-    }
-
-    .dropzone {
-        width: 60px;
-        height: 60px;
+        transform: translateY(-10px);
     }
 }
