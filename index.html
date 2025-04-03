@@ -8,15 +8,15 @@
 </head>
 <body>
     <h1>Örüntü Oyunu</h1>
+    
+    <div id="chooseMessage" class="message">Başlangıç rengi seçin:</div>
+    <div class="buttons">
+        <button id="startOrange">Turuncu ile Başla</button>
+        <button id="startGreen">Yeşil ile Başla</button>
+    </div>
+
     <div class="game-container">
-        <div class="shapes-container">
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape orange" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-            <div class="shape green" draggable="true"></div>
-        </div>
+        <div class="shapes-container"></div>
         <div class="pattern-container">
             <div class="dropzone"></div>
             <div class="dropzone"></div>
@@ -26,9 +26,10 @@
             <div class="dropzone"></div>
         </div>
     </div>
-    <div id="successMessage" class="message">Tebrikler! Örüntüyü doğru tamamladınız!</div>
+
+    <div id="successMessage" class="message">Tebrikler! Örüntüyü tamamladınız!</div>
+    <button id="resetButton" class="hidden">Başa Dön</button>
     <audio id="errorSound" src="error.mp3" preload="auto"></audio>
-    <button id="resetButton" style="display:none;">Yeniden Başlat</button>
 
     <script src="script.js"></script>
 </body>
