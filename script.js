@@ -2,43 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const shapes = document.querySelectorAll(".shape");
     const dropzones = document.querySelectorAll(".dropzone");
     const successMessage = document.getElementById("successMessage");
-    const errorMessage = document.getElementById("errorMessage");
     const resetButton = document.getElementById("resetButton");
     const errorSound = document.getElementById("errorSound");
 
     let draggedElement = null;
     let matchedShapes = 0;
     let patternIndex = 0;
-    let patternOrder = [];
+    let patternOrder = ["orange", "green", "orange", "green", "orange", "green"];
 
-    // Başlangıç rengi seçme işlemi
-    function selectColor(color) {
-        if (color === "orange") {
+    function updatePatternOrder(startColor) {
+        if (startColor === "orange") {
             patternOrder = ["orange", "green", "orange", "green", "orange", "green"];
         } else {
             patternOrder = ["green", "orange", "green", "orange", "green", "orange"];
         }
-
-        // Başlangıç mesajını gizle
-        document.getElementById("chooseMessage").style.display = "none";
-        resetGame();
     }
 
-    // Oyun sıfırlama fonksiyonu
-    function resetGame() {
-        matchedShapes = 0;
-        patternIndex = 0;
-        dropzones.forEach(zone => {
-            zone.classList.remove("filled");
-            zone.style.backgroundColor = "transparent";
-        });
-        shapes.forEach(shape => {
-            shape.style.display = "block";
-            shape.style.position = "relative";
-        });
-    }
-
-    // Şekilleri yerleştirme işlemi
     shapes.forEach(shape => {
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("dragend", dragEnd);
@@ -55,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function dragStart(e) {
         draggedElement = e.target;
         e.dataTransfer.setData("color", draggedElement.classList.contains("green") ? "green" : "orange");
-        setTimeout(() => draggedElement.style.visibility = "hidden", 0);
+        setTimeout(() => (draggedElement.style.visibility = "hidden"), 0);
     }
 
     function dragEnd() {
@@ -97,6 +76,18 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
         const draggedColor = draggedElement.classList.contains("green") ? "green" : "orange";
         const targetDropzone = target || e.target;
+
+        // Mıknatıs etkisi: Yakınsa oturt
+        const dropzoneRect = targetDropzone.getBoundingClientRect();
+        const draggedRect = draggedElement.getBoundingClientRect();
+        const distance = Math.hypot(
+            dropzoneRect.x - draggedRect.x,
+            dropzoneRect.y - draggedRect.y
+        );
+
+        if (distance > 50) {
+            return; // Çok uzaktaysa iptal et
+        }
 
         if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
             const expectedColor = patternOrder[patternIndex];
