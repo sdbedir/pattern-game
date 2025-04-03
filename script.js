@@ -1,118 +1,119 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const shapesContainer = document.querySelector(".shapes-container");
-    const dropzones = document.querySelectorAll(".dropzone");
-    const successMessage = document.getElementById("successMessage");
-    const resetButton = document.getElementById("resetButton");
+    const shapesContainer = document.getElementById("shapesContainer");
+    const dropzoneContainer = document.getElementById("dropzoneContainer");
+    const message = document.getElementById("message");
+    const restartButton = document.getElementById("restartButton");
     const errorSound = document.getElementById("errorSound");
 
-    let draggedElement = null;
-    let matchedShapes = 0;
-    let patternOrder = [];
-    let firstColor = "";
+    let selectedColor = "";
+    let correctPattern = [];
+    let placedShapes = 0;
 
-    function initializeGame(color) {
-        firstColor = color;
-        patternOrder = color === "orange" 
-            ? ["orange", "green", "orange", "green", "orange", "green"] 
+    function startGame(color) {
+        selectedColor = color;
+        correctPattern = selectedColor === "orange"
+            ? ["orange", "green", "orange", "green", "orange", "green"]
             : ["green", "orange", "green", "orange", "green", "orange"];
 
-        document.getElementById("chooseMessage").style.display = "none";
-        createShapes();
-    }
-
-    function createShapes() {
         shapesContainer.innerHTML = "";
-        let shapeOrder = firstColor === "orange" 
-            ? ["orange", "orange", "orange", "green", "green", "green"] 
-            : ["green", "green", "green", "orange", "orange", "orange"];
+        dropzoneContainer.innerHTML = "";
+        message.textContent = "";
+        restartButton.style.display = "none";
+        placedShapes = 0;
 
-        shapeOrder.forEach(color => {
-            let shape = document.createElement("div");
-            shape.classList.add("shape", color);
-            shape.draggable = true;
-            shape.addEventListener("dragstart", dragStart);
-            shape.addEventListener("dragend", dragEnd);
-            shape.addEventListener("touchstart", touchStart, { passive: false });
-            shape.addEventListener("touchmove", touchMove, { passive: false });
-            shape.addEventListener("touchend", touchEnd);
+        // Şekilleri oluştur ve sola yerleştir
+        const initialPattern = ["orange", "orange", "orange", "green", "green", "green"];
+        initialPattern.forEach(color => {
+            const shape = createShape(color);
             shapesContainer.appendChild(shape);
+        });
+
+        // Boş alanları oluştur ve sağa yerleştir
+        correctPattern.forEach(() => {
+            const dropzone = createDropzone();
+            dropzoneContainer.appendChild(dropzone);
         });
     }
 
-    dropzones.forEach(dropzone => {
-        dropzone.addEventListener("dragover", dragOver);
-        dropzone.addEventListener("drop", drop);
-    });
+    function createShape(color) {
+        const shape = document.createElement("div");
+        shape.classList.add("shape", color);
+        shape.draggable = true;
 
-    function dragStart(e) {
-        draggedElement = e.target;
-        e.dataTransfer.setData("color", draggedElement.classList.contains("green") ? "green" : "orange");
-        setTimeout(() => (draggedElement.style.visibility = "hidden"), 0);
+        // Mobil için dokunma desteği
+        shape.addEventListener("dragstart", dragStart);
+        shape.addEventListener("touchstart", touchStart);
+        shape.addEventListener("touchmove", touchMove);
+        shape.addEventListener("touchend", touchEnd);
+
+        return shape;
     }
 
-    function dragEnd() {
-        if (draggedElement) {
-            draggedElement.style.visibility = "visible";
-        }
+    function createDropzone() {
+        const dropzone = document.createElement("div");
+        dropzone.classList.add("dropzone");
+
+        dropzone.addEventListener("dragover", dragOver);
+        dropzone.addEventListener("drop", drop);
+
+        return dropzone;
+    }
+
+    function dragStart(e) {
+        e.dataTransfer.setData("color", e.target.classList.contains("orange") ? "orange" : "green");
+        e.target.classList.add("dragging");
     }
 
     function touchStart(e) {
-        draggedElement = e.target;
-        draggedElement.style.opacity = "0.5";
+        e.target.classList.add("dragging");
     }
 
     function touchMove(e) {
-        e.preventDefault();
         const touch = e.touches[0];
-        draggedElement.style.position = "fixed";
-        draggedElement.style.left = `${touch.clientX - 40}px`;
-        draggedElement.style.top = `${touch.clientY - 40}px`;
+        const shape = document.querySelector(".dragging");
+
+        if (shape) {
+            shape.style.position = "absolute";
+            shape.style.left = touch.pageX - 30 + "px";
+            shape.style.top = touch.pageY - 30 + "px";
+        }
     }
 
     function touchEnd(e) {
-        const touch = e.changedTouches[0];
-        let dropTarget = document.elementFromPoint(touch.clientX, touch.clientY);
-
-        if (dropTarget && dropTarget.classList.contains("dropzone")) {
-            drop({ preventDefault: () => {} }, dropTarget);
-        }
-
-        draggedElement.style.opacity = "1";
-        draggedElement.style.position = "static";
+        const shape = document.querySelector(".dragging");
+        shape.style.position = "relative";
+        shape.classList.remove("dragging");
     }
 
     function dragOver(e) {
         e.preventDefault();
     }
 
-    function drop(e, target = null) {
+    function drop(e) {
         e.preventDefault();
-        const draggedColor = draggedElement.classList.contains("green") ? "green" : "orange";
-        const targetDropzone = target || e.target;
+        const color = e.dataTransfer.getData("color");
 
-        if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
-            const expectedColor = patternOrder[matchedShapes];
+        if (color === correctPattern[placedShapes] && !e.target.classList.contains("filled")) {
+            e.target.classList.add("filled", color);
+            placedShapes++;
 
-            if (draggedColor === expectedColor) {
-                targetDropzone.classList.add("filled");
-                targetDropzone.style.backgroundColor = draggedColor;
-                draggedElement.remove(); // Soldaki daireyi kaldır
-                matchedShapes++;
+            // Doğru yerleştirilen şekli soldan sil
+            shapesContainer.removeChild(shapesContainer.children[0]);
 
-                if (matchedShapes === dropzones.length) {
-                    successMessage.style.display = "block";
-                    resetButton.style.display = "block";
-                }
-            } else {
-                errorSound.play();
+            if (placedShapes === correctPattern.length) {
+                message.textContent = "Tebrikler! Örüntüyü doğru tamamladınız!";
+                restartButton.style.display = "block";
             }
+        } else {
+            errorSound.play();
         }
     }
 
-    resetButton.addEventListener("click", () => {
-        location.reload();
-    });
+    function restartGame() {
+        startGame(selectedColor);
+    }
 
-    document.getElementById("startOrange").addEventListener("click", () => initializeGame("orange"));
-    document.getElementById("startGreen").addEventListener("click", () => initializeGame("green"));
+    // Oyunu başlatma butonlarına bağla
+    window.startGame = startGame;
+    window.restartGame = restartGame;
 });
