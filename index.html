@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eksik Örüntüyü Tamamlama Oyunu</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Örüntü Oyunu</h1>
+  <h1>Eksik Örüntüyü Tamamlama Oyunu</h1>
+  <p>Eksik örüntü parçasını sürükleyip bırakın!</p>
 
-    <!-- Başlangıç butonları -->
-    <div class="controls">
-        <button onclick="startGame('orange')">Turuncu ile Başla</button>
-        <button onclick="startGame('green')">Yeşil ile Başla</button>
-    </div>
+  <div class="pattern">
+    <div class="filled" style="background-color: red;"></div>
+    <div class="filled" style="background-color: blue;"></div>
+    <div class="dropzone" data-correct-color="red"></div>
+    <div class="filled" style="background-color: blue;"></div>
+    <div class="filled" style="background-color: red;"></div>
+  </div>
 
-    <!-- Oyun Alanı -->
-    <div class="game-container">
-        <div class="shapes-container" id="shapesContainer"></div>
-        <div class="dropzone-container" id="dropzoneContainer"></div>
-    </div>
+  <div>
+    <div class="draggable" style="background-color: red;" draggable="true"></div>
+    <div class="draggable" style="background-color: blue;" draggable="true"></div>
+  </div>
 
-    <!-- Mesaj ve Yeniden Başlatma Butonu -->
-    <p id="message"></p>
-    <button id="restartButton" onclick="restartGame()" style="display:none;">Başa Dön</
+  <script src="script.js"></script>
+</body>
+</html>
