@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const shapes = document.querySelectorAll(".shape");
+    const shapesContainer = document.querySelector(".shapes-container");
     const dropzones = document.querySelectorAll(".dropzone");
     const successMessage = document.getElementById("successMessage");
     const resetButton = document.getElementById("resetButton");
@@ -8,23 +8,36 @@ document.addEventListener("DOMContentLoaded", () => {
     let draggedElement = null;
     let matchedShapes = 0;
     let patternIndex = 0;
-    let patternOrder = ["orange", "green", "orange", "green", "orange", "green"];
+    let patternOrder = [];
+    let firstColor = "";
 
-    function updatePatternOrder(startColor) {
-        if (startColor === "orange") {
-            patternOrder = ["orange", "green", "orange", "green", "orange", "green"];
-        } else {
-            patternOrder = ["green", "orange", "green", "orange", "green", "orange"];
-        }
+    function initializeGame(color) {
+        firstColor = color;
+        patternOrder = color === "orange" 
+            ? ["orange", "green", "orange", "green", "orange", "green"] 
+            : ["green", "orange", "green", "orange", "green", "orange"];
+        document.getElementById("chooseMessage").style.display = "none";
+        createShapes();
     }
 
-    shapes.forEach(shape => {
-        shape.addEventListener("dragstart", dragStart);
-        shape.addEventListener("dragend", dragEnd);
-        shape.addEventListener("touchstart", touchStart, { passive: false });
-        shape.addEventListener("touchmove", touchMove, { passive: false });
-        shape.addEventListener("touchend", touchEnd);
-    });
+    function createShapes() {
+        shapesContainer.innerHTML = "";
+        let shapeOrder = firstColor === "orange" 
+            ? ["orange", "orange", "orange", "green", "green", "green"] 
+            : ["green", "green", "green", "orange", "orange", "orange"];
+
+        shapeOrder.forEach(color => {
+            let shape = document.createElement("div");
+            shape.classList.add("shape", color);
+            shape.draggable = true;
+            shape.addEventListener("dragstart", dragStart);
+            shape.addEventListener("dragend", dragEnd);
+            shape.addEventListener("touchstart", touchStart, { passive: false });
+            shape.addEventListener("touchmove", touchMove, { passive: false });
+            shape.addEventListener("touchend", touchEnd);
+            shapesContainer.appendChild(shape);
+        });
+    }
 
     dropzones.forEach(dropzone => {
         dropzone.addEventListener("dragover", dragOver);
@@ -77,25 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const draggedColor = draggedElement.classList.contains("green") ? "green" : "orange";
         const targetDropzone = target || e.target;
 
-        // Mıknatıs etkisi: Yakınsa oturt
-        const dropzoneRect = targetDropzone.getBoundingClientRect();
-        const draggedRect = draggedElement.getBoundingClientRect();
-        const distance = Math.hypot(
-            dropzoneRect.x - draggedRect.x,
-            dropzoneRect.y - draggedRect.y
-        );
-
-        if (distance > 50) {
-            return; // Çok uzaktaysa iptal et
-        }
-
         if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
             const expectedColor = patternOrder[patternIndex];
 
             if (draggedColor === expectedColor) {
                 targetDropzone.classList.add("filled");
                 targetDropzone.style.backgroundColor = draggedColor;
-                draggedElement.style.display = "none";
+                draggedElement.remove();
                 matchedShapes++;
                 patternIndex++;
 
@@ -105,7 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } else {
                 errorSound.play();
-                draggedElement.style.display = "block";
             }
         }
     }
@@ -113,4 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     resetButton.addEventListener("click", () => {
         location.reload();
     });
+
+    document.getElementById("startOrange").addEventListener("click", () => initializeGame("orange"));
+    document.getElementById("startGreen").addEventListener("click", () => initializeGame("green"));
 });
