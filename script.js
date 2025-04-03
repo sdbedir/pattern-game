@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const successMessage = document.getElementById("successMessage");
     const resetButton = document.getElementById("resetButton");
     const errorSound = document.getElementById("errorSound");
-    
+
     let draggedElement = null;
     let matchedShapes = 0;
     let patternOrder = [];
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         patternOrder = color === "orange" 
             ? ["orange", "green", "orange", "green", "orange", "green"] 
             : ["green", "orange", "green", "orange", "green", "orange"];
+
         document.getElementById("chooseMessage").style.display = "none";
         createShapes();
     }
