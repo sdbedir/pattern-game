@@ -4,10 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const successMessage = document.getElementById("successMessage");
     const resetButton = document.getElementById("resetButton");
     const errorSound = document.getElementById("errorSound");
-
+    
     let draggedElement = null;
     let matchedShapes = 0;
-    let patternIndex = 0;
     let patternOrder = [];
     let firstColor = "";
 
@@ -91,14 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const targetDropzone = target || e.target;
 
         if (targetDropzone.classList.contains("dropzone") && !targetDropzone.classList.contains("filled")) {
-            const expectedColor = patternOrder[patternIndex];
+            const expectedColor = patternOrder[matchedShapes];
 
             if (draggedColor === expectedColor) {
                 targetDropzone.classList.add("filled");
                 targetDropzone.style.backgroundColor = draggedColor;
-                draggedElement.remove();
+                draggedElement.remove(); // Soldaki daireyi kaldır
                 matchedShapes++;
-                patternIndex++;
 
                 if (matchedShapes === dropzones.length) {
                     successMessage.style.display = "block";
