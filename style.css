@@ -23,8 +23,6 @@ h1 {
 
 .shapes-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     gap: 10px;
 }
 
@@ -36,12 +34,15 @@ h1 {
 .shape {
     width: 80px;
     height: 80px;
-    background-color: orange;
     border-radius: 50%;
     cursor: grab;
 }
 
-.shape.yellow {
+.shape.orange {
+    background-color: orange;
+}
+
+.shape.green {
     background-color: green;
 }
 
