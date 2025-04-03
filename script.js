@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
         shape.classList.add("shape", color);
         shape.draggable = true;
 
-        // Mobil için dokunma desteği
+        // Dokunmatik destek ekle
         shape.addEventListener("dragstart", dragStart);
         shape.addEventListener("touchstart", touchStart);
         shape.addEventListener("touchmove", touchMove);
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", () => {
         startGame(selectedColor);
     }
 
-    // Oyunu başlatma butonlarına bağla
     window.startGame = startGame;
     window.restartGame = restartGame;
 });
