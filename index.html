@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +8,26 @@
 </head>
 <body>
     <h1>Örüntü Oyunu</h1>
-    <p>Turuncu veya yeşil ile başlayarak örüntüyü tamamla!</p>
-
     <div class="game-container">
-        <!-- Sol tarafta taşınabilir daireler -->
         <div class="shapes-container">
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
+            <div class="shape orange" draggable="true"></div>
+            <div class="shape green" draggable="true"></div>
         </div>
 
-        <!-- Sağ tarafta boş kutular -->
         <div class="pattern-container">
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
+            <div class="dropzone" data-color="green"></div>
+            <div class="dropzone" data-color="orange"></div>
         </div>
     </div>
-
-    <p class="message" id="successMessage">Tebrikler! Örüntüyü başarıyla tamamladınız. 🎉</p>
-    <button id="resetButton">Başa Dön</button>
+    <p class="message" id="successMessage">Tebrikler! Şekli başarıyla tamamladınız.</p>
 
     <script src="script.js"></script>
 </body>
