@@ -1,88 +1,87 @@
 body {
     font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
     margin: 0;
-    padding: 20px;
+    padding: 0;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 50px;
+    height: 100vh;
 }
 
 h1 {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    text-align: center;
     color: #E91E63;
-}
-
-p {
-    font-size: 18px;
 }
 
 .game-container {
     display: flex;
-    justify-content: center;
-    gap: 50px;
-    margin-top: 20px;
+    gap: 100px;
 }
 
 .shapes-container {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
 }
 
 .pattern-container {
     display: flex;
-    gap: 10px;
-}
-
-.shape, .dropzone {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    font-size: 20px;
-    cursor: pointer;
+    gap: 20px;
 }
 
 .shape {
+    width: 180px;
+    height: 180px;
+    background-color: orange;
+    border-radius: 50%;
     cursor: grab;
 }
 
-.shape.orange {
-    background-color: orange;
-}
-
 .shape.green {
+    width: 200px;
+    height: 200px;
     background-color: green;
 }
 
 .dropzone {
+    width: 200px;
+    height: 200px;
     border: 2px dashed #ccc;
-    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.dropzone.filled {
-    border: none;
+.hidden {
+    visibility: hidden;
 }
 
 .message {
     display: none;
     color: #4CAF50;
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
     margin-top: 20px;
 }
 
-button {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
+.bounce {
+    animation: bounce 0.5s infinite alternate;
 }
 
-button:hover {
-    background-color: #45a049;
+@keyframes bounce {
+    from {
+        transform: translateY(0);
+    }
+    to {
+        transform: translateY(-20px);
+    }
 }
