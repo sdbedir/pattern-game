@@ -21,7 +21,10 @@ h1 {
 
 .game-container {
     display: flex;
-    gap: 100px;
+    gap: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .shapes-container {
@@ -35,13 +38,16 @@ h1 {
     display: flex;
     align-items: center;
     gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .shape {
-    width: 180px;
-    height: 180px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     cursor: grab;
+    transition: transform 0.2s;
 }
 
 .shape.orange {
@@ -49,19 +55,18 @@ h1 {
 }
 
 .shape.green {
-    width: 200px;
-    height: 200px;
     background-color: green;
 }
 
 .dropzone {
-    width: 200px;
-    height: 200px;
+    width: 120px;
+    height: 120px;
     border: 2px dashed #ccc;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background-color 0.3s;
 }
 
 .hidden {
@@ -86,5 +91,12 @@ h1 {
     }
     to {
         transform: translateY(-20px);
+    }
+}
+
+@media (max-width: 768px) {
+    .game-container {
+        flex-direction: column;
+        gap: 30px;
     }
 }
