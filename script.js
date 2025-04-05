@@ -1,58 +1,81 @@
-const shapes = document.querySelectorAll('.shapes-container .shape');
-const dropzones = document.querySelectorAll('.pattern-container .dropzone');
-const successMessage = document.getElementById('successMessage');
-let matchedShapes = 0;
+const draggables = document.querySelectorAll(".draggable");
+const slots = document.querySelectorAll(".slot");
+const message = document.getElementById("message");
+const resetBtn = document.getElementById("reset");
 
-shapes.forEach(shape => {
-    shape.addEventListener('dragstart', dragStart);
-    shape.addEventListener('dragend', dragEnd);
+let placedColors = Array(6).fill(null);
+
+draggables.forEach(item => {
+  item.addEventListener("dragstart", dragStart);
 });
 
-dropzones.forEach(dropzone => {
-    dropzone.addEventListener('dragover', dragOver);
-    dropzone.addEventListener('dragenter', dragEnter);
-    dropzone.addEventListener('dragleave', dragLeave);
-    dropzone.addEventListener('drop', drop);
+slots.forEach(slot => {
+  slot.addEventListener("dragover", dragOver);
+  slot.addEventListener("drop", drop);
 });
 
 function dragStart(e) {
-    e.dataTransfer.setData('text/plain', e.target.classList.contains('green') ? 'green' : 'orange');
-    setTimeout(() => e.target.classList.add('hidden'), 0);
-}
-
-function dragEnd(e) {
-    e.target.classList.remove('hidden');
+  e.dataTransfer.setData("color", e.target.dataset.color);
+  e.dataTransfer.setData("id", e.target.id);
+  setTimeout(() => {
+    e.target.style.opacity = "0.3";
+  }, 0);
 }
 
 function dragOver(e) {
-    e.preventDefault();
-}
-
-function dragEnter(e) {
-    e.preventDefault();
-    e.target.classList.add('hover');
-}
-
-function dragLeave(e) {
-    e.target.classList.remove('hover');
+  e.preventDefault();
 }
 
 function drop(e) {
-    e.preventDefault();
-    const color = e.dataTransfer.getData('text/plain');
-    const targetColor = e.target.getAttribute('data-color');
+  e.preventDefault();
+  if (e.target.classList.contains("slot") && e.target.childNodes.length === 0) {
+    const color = e.dataTransfer.getData("color");
+    const newCircle = document.createElement("div");
+    newCircle.className = `draggable ${color}`;
+    newCircle.setAttribute("data-color", color);
+    newCircle.setAttribute("draggable", "false");
+    e.target.appendChild(newCircle);
 
-    if (color === targetColor && !e.target.classList.contains('filled')) {
-        e.target.classList.add('filled');
-        e.target.style.backgroundColor = color;
-        matchedShapes++;
-        checkWin();
-    }
+    const index = parseInt(e.target.dataset.index);
+    placedColors[index] = color;
+
+    checkPattern();
+  }
 }
 
-function checkWin() {
-    if (matchedShapes === dropzones.length) {
-        successMessage.style.display = 'block';
-        dropzones.forEach(zone => zone.classList.add('bounce'));
+function checkPattern() {
+  if (placedColors.every(c => c !== null)) {
+    const pattern1 = ["orange", "green", "orange", "green", "orange", "green"];
+    const pattern2 = ["green", "orange", "green", "orange", "green", "orange"];
+
+    if (
+      JSON.stringify(placedColors) === JSON.stringify(pattern1) ||
+      JSON.stringify(placedColors) === JSON.stringify(pattern2)
+    ) {
+      message.classList.remove("hidden");
     }
+  }
 }
+
+resetBtn.addEventListener("click", () => {
+  placedColors = Array(6).fill(null);
+  message.classList.add("hidden");
+
+  slots.forEach(slot => (slot.innerHTML = ""));
+
+  // Sayfayı yenilemeden draggable'ları resetlemek:
+  const source = document.querySelector(".source");
+  source.innerHTML = `
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+  `;
+
+  // Yeni eklenen elementlere event ekle
+  document.querySelectorAll(".draggable").forEach(item => {
+    item.addEventListener("dragstart", dragStart);
+  });
+});
