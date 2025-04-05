@@ -1,34 +1,71 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Örüntü Oyunu</h1>
-    <div class="game-container">
-        <div class="shapes-container">
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-        </div>
-        <div class="pattern-container">
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-        </div>
-    </div>
-    <p class="message" id="successMessage">Tebrikler! Örüntüyü doğru sıralama ile yerleştirdiniz.</p>
-    <button id="restartBtn">Başa Dön</button>
+const shapes = document.querySelectorAll('.shape');
+const dropzones = document.querySelectorAll('.dropzone');
+const successMessage = document.getElementById('successMessage');
+const restartBtn = document.getElementById('restartBtn');
 
-    <script src="script.js"></script>
-</body>
-</html>
+let placedColors = [];
+
+shapes.forEach(shape => {
+    shape.addEventListener('dragstart', dragStart);
+});
+
+dropzones.forEach(zone => {
+    zone.addEventListener('dragover', dragOver);
+    zone.addEventListener('drop', handleDrop);
+});
+
+function dragStart(e) {
+    e.dataTransfer.setData('color', e.target.dataset.color);
+    e.dataTransfer.setData('elementId', e.target.id);
+    e.target.classList.add('dragging');
+}
+
+function dragOver(e) {
+    e.preventDefault();
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const color = e.dataTransfer.getData('color');
+    const draggedElement = document.querySelector('.dragging');
+
+    if (e.target.classList.contains('dropzone') && !e.target.hasChildNodes()) {
+        const lastColor = placedColors[placedColors.length - 1];
+
+        // İlk taşımı serbest bırakıyoruz
+        if (placedColors.length === 0 || lastColor !== color) {
+            const newShape = document.createElement('div');
+            newShape.className = `shape ${color}`;
+            e.target.appendChild(newShape);
+            placedColors.push(color);
+            draggedElement.remove(); // Taşınan öğeyi orijinal yerinden kaldır
+
+            checkPattern();
+        }
+    }
+
+    draggedElement.classList.remove('dragging');
+}
+
+function checkPattern() {
+    if (placedColors.length === 6) {
+        const pattern1 = ['orange', 'green', 'orange', 'green', 'orange', 'green'];
+        const pattern2 = ['green', 'orange', 'green', 'orange', 'green', 'orange'];
+
+        const win = JSON.stringify(placedColors) === JSON.stringify(pattern1) ||
+                    JSON.stringify(placedColors) === JSON.stringify(pattern2);
+
+        if (win) {
+            successMessage.style.display = 'block';
+        } else {
+            successMessage.textContent = "Yanlış örüntü, lütfen tekrar deneyin.";
+            successMessage.style.display = 'block';
+        }
+
+        restartBtn.style.display = 'inline-block';
+    }
+}
+
+restartBtn.addEventListener('click', () => {
+    location.reload();
+});
