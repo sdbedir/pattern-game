@@ -1,34 +1,38 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Örüntü Oyunu</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Örüntü Oyunu</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Örüntü Oyunu</h1>
-    <div class="game-container">
-        <div class="shapes-container">
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape orange" draggable="true" data-color="orange"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-            <div class="shape green" draggable="true" data-color="green"></div>
-        </div>
-        <div class="pattern-container">
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-            <div class="dropzone"></div>
-        </div>
-    </div>
-    <p class="message" id="successMessage">Tebrikler! Örüntüyü doğru sıralama ile yerleştirdiniz.</p>
-    <button id="restartBtn">Başa Dön</button>
+  <h1>Örüntü Oyunu</h1>
+  <p>Turuncu veya yeşil ile başlayarak örüntüyü tamamla!</p>
 
-    <script src="script.js"></script>
+  <div class="game-container">
+    <div class="source">
+      <div class="draggable orange" draggable="true" data-color="orange"></div>
+      <div class="draggable orange" draggable="true" data-color="orange"></div>
+      <div class="draggable orange" draggable="true" data-color="orange"></div>
+      <div class="draggable green" draggable="true" data-color="green"></div>
+      <div class="draggable green" draggable="true" data-color="green"></div>
+      <div class="draggable green" draggable="true" data-color="green"></div>
+    </div>
+
+    <div class="target">
+      <div class="slot" data-index="0"></div>
+      <div class="slot" data-index="1"></div>
+      <div class="slot" data-index="2"></div>
+      <div class="slot" data-index="3"></div>
+      <div class="slot" data-index="4"></div>
+      <div class="slot" data-index="5"></div>
+    </div>
+  </div>
+
+  <p id="message" class="hidden">🎉 Tebrikler! Örüntüyü doğru yerleştirdiniz.</p>
+  <button id="reset">Başa Dön</button>
+
+  <script src="script.js"></script>
 </body>
 </html>
