@@ -1,71 +1,81 @@
-const shapes = document.querySelectorAll('.shape');
-const dropzones = document.querySelectorAll('.dropzone');
-const successMessage = document.getElementById('successMessage');
-const restartBtn = document.getElementById('restartBtn');
+const draggables = document.querySelectorAll(".draggable");
+const slots = document.querySelectorAll(".slot");
+const message = document.getElementById("message");
+const resetBtn = document.getElementById("reset");
 
-let placedColors = [];
+let placedColors = Array(6).fill(null);
 
-shapes.forEach(shape => {
-    shape.addEventListener('dragstart', dragStart);
+draggables.forEach(item => {
+  item.addEventListener("dragstart", dragStart);
 });
 
-dropzones.forEach(zone => {
-    zone.addEventListener('dragover', dragOver);
-    zone.addEventListener('drop', handleDrop);
+slots.forEach(slot => {
+  slot.addEventListener("dragover", dragOver);
+  slot.addEventListener("drop", drop);
 });
 
 function dragStart(e) {
-    e.dataTransfer.setData('color', e.target.dataset.color);
-    e.dataTransfer.setData('elementId', e.target.id);
-    e.target.classList.add('dragging');
+  e.dataTransfer.setData("color", e.target.dataset.color);
+  e.dataTransfer.setData("id", e.target.id);
+  setTimeout(() => {
+    e.target.style.opacity = "0.3";
+  }, 0);
 }
 
 function dragOver(e) {
-    e.preventDefault();
+  e.preventDefault();
 }
 
-function handleDrop(e) {
-    e.preventDefault();
-    const color = e.dataTransfer.getData('color');
-    const draggedElement = document.querySelector('.dragging');
+function drop(e) {
+  e.preventDefault();
+  if (e.target.classList.contains("slot") && e.target.childNodes.length === 0) {
+    const color = e.dataTransfer.getData("color");
+    const newCircle = document.createElement("div");
+    newCircle.className = `draggable ${color}`;
+    newCircle.setAttribute("data-color", color);
+    newCircle.setAttribute("draggable", "false");
+    e.target.appendChild(newCircle);
 
-    if (e.target.classList.contains('dropzone') && !e.target.hasChildNodes()) {
-        const lastColor = placedColors[placedColors.length - 1];
+    const index = parseInt(e.target.dataset.index);
+    placedColors[index] = color;
 
-        // İlk taşımı serbest bırakıyoruz
-        if (placedColors.length === 0 || lastColor !== color) {
-            const newShape = document.createElement('div');
-            newShape.className = `shape ${color}`;
-            e.target.appendChild(newShape);
-            placedColors.push(color);
-            draggedElement.remove(); // Taşınan öğeyi orijinal yerinden kaldır
-
-            checkPattern();
-        }
-    }
-
-    draggedElement.classList.remove('dragging');
+    checkPattern();
+  }
 }
 
 function checkPattern() {
-    if (placedColors.length === 6) {
-        const pattern1 = ['orange', 'green', 'orange', 'green', 'orange', 'green'];
-        const pattern2 = ['green', 'orange', 'green', 'orange', 'green', 'orange'];
+  if (placedColors.every(c => c !== null)) {
+    const pattern1 = ["orange", "green", "orange", "green", "orange", "green"];
+    const pattern2 = ["green", "orange", "green", "orange", "green", "orange"];
 
-        const win = JSON.stringify(placedColors) === JSON.stringify(pattern1) ||
-                    JSON.stringify(placedColors) === JSON.stringify(pattern2);
-
-        if (win) {
-            successMessage.style.display = 'block';
-        } else {
-            successMessage.textContent = "Yanlış örüntü, lütfen tekrar deneyin.";
-            successMessage.style.display = 'block';
-        }
-
-        restartBtn.style.display = 'inline-block';
+    if (
+      JSON.stringify(placedColors) === JSON.stringify(pattern1) ||
+      JSON.stringify(placedColors) === JSON.stringify(pattern2)
+    ) {
+      message.classList.remove("hidden");
     }
+  }
 }
 
-restartBtn.addEventListener('click', () => {
-    location.reload();
+resetBtn.addEventListener("click", () => {
+  placedColors = Array(6).fill(null);
+  message.classList.add("hidden");
+
+  slots.forEach(slot => (slot.innerHTML = ""));
+
+  // Sayfayı yenilemeden draggable'ları resetlemek:
+  const source = document.querySelector(".source");
+  source.innerHTML = `
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable orange" draggable="true" data-color="orange"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+    <div class="draggable green" draggable="true" data-color="green"></div>
+  `;
+
+  // Yeni eklenen elementlere event ekle
+  document.querySelectorAll(".draggable").forEach(item => {
+    item.addEventListener("dragstart", dragStart);
+  });
 });
