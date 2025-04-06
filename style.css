@@ -1,78 +1,77 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 20px;
+  background-color: #f7f7f7;
 }
 
 h1 {
-    color: #333;
+  color: #333;
 }
 
 .game-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    margin-top: 30px;
-    flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  gap: 60px;
 }
 
-.shapes-container {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+.source {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.shape {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    cursor: grab;
+.draggable {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  cursor: grab;
 }
 
-.shape.orange {
-    background-color: orange;
+.orange {
+  background-color: orange;
 }
 
-.shape.green {
-    background-color: green;
+.green {
+  background-color: green;
 }
 
-.pattern-container {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin-top: 50px;
-    flex-wrap: wrap;
+.target {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
-.dropzone {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px dashed #999;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.slot {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 2px dashed #aaa;
+  background-color: #fff;
 }
 
-.message {
-    margin-top: 30px;
-    font-size: 20px;
-    font-weight: bold;
-    color: green;
-    display: none;
+.hidden {
+  display: none;
 }
 
-#restartBtn {
-    margin-top: 15px;
-    padding: 10px 20px;
-    font-size: 16px;
-    display: none;
-    cursor: pointer;
+#message {
+  margin-top: 30px;
+  font-size: 20px;
+  color: green;
+}
+
+#reset {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#reset:hover {
+  background-color: #3e8e41;
 }
