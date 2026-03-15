@@ -1,1 +1,1 @@
-# pattern-game
+# patterngame.github.io
